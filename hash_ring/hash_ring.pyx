@@ -1,3 +1,5 @@
+from libc.stdlib cimport malloc, free
+
 cdef extern from 'hash_ring.h':
     cdef int HASH_RING_OK
     cdef int HASH_RING_ERR
@@ -18,6 +20,7 @@ cdef extern from 'hash_ring.h':
     void hash_ring_free(hash_ring_t *ring)
     int hash_ring_add_node(hash_ring_t *ring, unsigned char *name, unsigned int name_len)
     hash_ring_node_t *hash_ring_find_node(hash_ring_t *ring, unsigned char *key, unsigned int key_len)
+    int hash_ring_find_nodes(hash_ring_t *ring, unsigned char *key, unsigned int key_len, hash_ring_node_t *nodes[], unsigned int num)
     int hash_ring_remove_node(hash_ring_t *ring, unsigned char *name, unsigned int name_len)
 
 HASH_FUNCTION_SHA1 = _HASH_FUNCTION_SHA1
@@ -44,3 +47,13 @@ cdef class HashRing:
         node = hash_ring_find_node(self._ring, key, len(key))
         if node:
             return node.name[:node.name_len]
+
+    def find_nodes(self, key, num=1):
+        cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+        if not nodes:
+            raise MemoryError()
+        try:
+            n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)
+            return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []
+        finally:
+            free(nodes)

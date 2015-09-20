@@ -236,6 +236,8 @@ static CYTHON_INLINE float __PYX_NAN() {
 
 #define __PYX_HAVE__hash_ring__hash_ring
 #define __PYX_HAVE_API__hash_ring__hash_ring
+#include "string.h"
+#include "stdlib.h"
 #include "hash_ring.h"
 #ifdef _OPENMP
 #include <omp.h>
@@ -451,7 +453,7 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_9hash_ring_9hash_ring_HashRing;
 
-/* "hash_ring/hash_ring.pyx":26
+/* "hash_ring/hash_ring.pyx":29
  * HASH_FUNCTION_MD5 = _HASH_FUNCTION_MD5
  * 
  * cdef class HashRing:             # <<<<<<<<<<<<<<
@@ -527,21 +529,6 @@ struct __pyx_obj_9hash_ring_9hash_ring_HashRing {
 #define __Pyx_CLEAR(r)    do { PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);} while(0)
 #define __Pyx_XCLEAR(r)   do { if((r) != NULL) {PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);}} while(0)
 
-static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
-
-static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
-    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
-    const char* function_name);
-
-static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
-    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
-
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
-#else
-#define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
-#endif
-
 #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject* attr_name) {
     PyTypeObject* tp = Py_TYPE(obj);
@@ -558,6 +545,47 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject
 #endif
 
 static PyObject *__Pyx_GetBuiltinName(PyObject *name);
+
+static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
+
+static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
+    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
+    const char* function_name);
+
+static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
+    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
+
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
+#else
+#define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
+#endif
+
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE int __Pyx_ListComp_Append(PyObject* list, PyObject* x) {
+    PyListObject* L = (PyListObject*) list;
+    Py_ssize_t len = Py_SIZE(list);
+    if (likely(L->allocated > len)) {
+        Py_INCREF(x);
+        PyList_SET_ITEM(list, len, x);
+        Py_SIZE(list) = len+1;
+        return 0;
+    }
+    return PyList_Append(list, x);
+}
+#else
+#define __Pyx_ListComp_Append(L,x) PyList_Append(L,x)
+#endif
+
+static CYTHON_INLINE void __Pyx_ErrRestore(PyObject *type, PyObject *value, PyObject *tb);
+static CYTHON_INLINE void __Pyx_ErrFetch(PyObject **type, PyObject **value, PyObject **tb);
+
+static int __Pyx_GetException(PyObject **type, PyObject **value, PyObject **tb);
+
+static CYTHON_INLINE void __Pyx_ExceptionSwap(PyObject **type, PyObject **value, PyObject **tb);
+
+static CYTHON_INLINE void __Pyx_ExceptionSave(PyObject **type, PyObject **value, PyObject **tb);
+static void __Pyx_ExceptionReset(PyObject *type, PyObject *value, PyObject *tb);
 
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 
@@ -584,6 +612,8 @@ static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
 
 static CYTHON_INLINE HASH_FUNCTION __Pyx_PyInt_As_HASH_FUNCTION(PyObject *);
 
+static CYTHON_INLINE size_t __Pyx_PyInt_As_size_t(PyObject *);
+
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
 static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
@@ -595,22 +625,33 @@ static int __Pyx_check_binary_version(void);
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
+/* Module declarations from 'libc.string' */
+
+/* Module declarations from 'libc.stdlib' */
+
 /* Module declarations from 'hash_ring.hash_ring' */
 static PyTypeObject *__pyx_ptype_9hash_ring_9hash_ring_HashRing = 0;
 #define __Pyx_MODULE_NAME "hash_ring.hash_ring"
 int __pyx_module_is_main_hash_ring__hash_ring = 0;
 
 /* Implementation of 'hash_ring.hash_ring' */
+static PyObject *__pyx_builtin_MemoryError;
+static char __pyx_k_key[] = "key";
+static char __pyx_k_num[] = "num";
 static char __pyx_k_main[] = "__main__";
 static char __pyx_k_test[] = "__test__";
 static char __pyx_k_hash_fn[] = "hash_fn";
+static char __pyx_k_MemoryError[] = "MemoryError";
 static char __pyx_k_num_replicas[] = "num_replicas";
 static char __pyx_k_HASH_FUNCTION_MD5[] = "HASH_FUNCTION_MD5";
 static char __pyx_k_HASH_FUNCTION_SHA1[] = "HASH_FUNCTION_SHA1";
 static PyObject *__pyx_n_s_HASH_FUNCTION_MD5;
 static PyObject *__pyx_n_s_HASH_FUNCTION_SHA1;
+static PyObject *__pyx_n_s_MemoryError;
 static PyObject *__pyx_n_s_hash_fn;
+static PyObject *__pyx_n_s_key;
 static PyObject *__pyx_n_s_main;
+static PyObject *__pyx_n_s_num;
 static PyObject *__pyx_n_s_num_replicas;
 static PyObject *__pyx_n_s_test;
 static int __pyx_pf_9hash_ring_9hash_ring_8HashRing___cinit__(struct __pyx_obj_9hash_ring_9hash_ring_HashRing *__pyx_v_self, PyObject *__pyx_v_num_replicas, PyObject *__pyx_v_hash_fn); /* proto */
@@ -618,11 +659,13 @@ static void __pyx_pf_9hash_ring_9hash_ring_8HashRing_2__dealloc__(struct __pyx_o
 static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_4add_node(struct __pyx_obj_9hash_ring_9hash_ring_HashRing *__pyx_v_self, PyObject *__pyx_v_name); /* proto */
 static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_6remove_node(struct __pyx_obj_9hash_ring_9hash_ring_HashRing *__pyx_v_self, PyObject *__pyx_v_name); /* proto */
 static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_8find_node(struct __pyx_obj_9hash_ring_9hash_ring_HashRing *__pyx_v_self, PyObject *__pyx_v_key); /* proto */
+static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_10find_nodes(struct __pyx_obj_9hash_ring_9hash_ring_HashRing *__pyx_v_self, PyObject *__pyx_v_key, PyObject *__pyx_v_num); /* proto */
 static PyObject *__pyx_tp_new_9hash_ring_9hash_ring_HashRing(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_128;
 static PyObject *__pyx_k_;
 
-/* "hash_ring/hash_ring.pyx":29
+/* "hash_ring/hash_ring.pyx":32
  *     cdef hash_ring_t *_ring
  * 
  *     def __cinit__(self, num_replicas=128, hash_fn=HASH_FUNCTION_MD5):             # <<<<<<<<<<<<<<
@@ -669,7 +712,7 @@ static int __pyx_pw_9hash_ring_9hash_ring_8HashRing_1__cinit__(PyObject *__pyx_v
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -684,7 +727,7 @@ static int __pyx_pw_9hash_ring_9hash_ring_8HashRing_1__cinit__(PyObject *__pyx_v
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("hash_ring.hash_ring.HashRing.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -707,18 +750,18 @@ static int __pyx_pf_9hash_ring_9hash_ring_8HashRing___cinit__(struct __pyx_obj_9
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "hash_ring/hash_ring.pyx":30
+  /* "hash_ring/hash_ring.pyx":33
  * 
  *     def __cinit__(self, num_replicas=128, hash_fn=HASH_FUNCTION_MD5):
  *         self._ring = hash_ring_create(num_replicas, hash_fn)             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-  __pyx_t_1 = __Pyx_PyInt_As_unsigned_int(__pyx_v_num_replicas); if (unlikely((__pyx_t_1 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_2 = __Pyx_PyInt_As_HASH_FUNCTION(__pyx_v_hash_fn); if (unlikely((__pyx_t_2 == (HASH_FUNCTION)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_As_unsigned_int(__pyx_v_num_replicas); if (unlikely((__pyx_t_1 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_HASH_FUNCTION(__pyx_v_hash_fn); if (unlikely((__pyx_t_2 == (HASH_FUNCTION)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_self->_ring = hash_ring_create(__pyx_t_1, __pyx_t_2);
 
-  /* "hash_ring/hash_ring.pyx":29
+  /* "hash_ring/hash_ring.pyx":32
  *     cdef hash_ring_t *_ring
  * 
  *     def __cinit__(self, num_replicas=128, hash_fn=HASH_FUNCTION_MD5):             # <<<<<<<<<<<<<<
@@ -737,7 +780,7 @@ static int __pyx_pf_9hash_ring_9hash_ring_8HashRing___cinit__(struct __pyx_obj_9
   return __pyx_r;
 }
 
-/* "hash_ring/hash_ring.pyx":32
+/* "hash_ring/hash_ring.pyx":35
  *         self._ring = hash_ring_create(num_replicas, hash_fn)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -760,7 +803,7 @@ static void __pyx_pf_9hash_ring_9hash_ring_8HashRing_2__dealloc__(struct __pyx_o
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "hash_ring/hash_ring.pyx":33
+  /* "hash_ring/hash_ring.pyx":36
  * 
  *     def __dealloc__(self):
  *         hash_ring_free(self._ring)             # <<<<<<<<<<<<<<
@@ -769,7 +812,7 @@ static void __pyx_pf_9hash_ring_9hash_ring_8HashRing_2__dealloc__(struct __pyx_o
  */
   hash_ring_free(__pyx_v_self->_ring);
 
-  /* "hash_ring/hash_ring.pyx":32
+  /* "hash_ring/hash_ring.pyx":35
  *         self._ring = hash_ring_create(num_replicas, hash_fn)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -781,7 +824,7 @@ static void __pyx_pf_9hash_ring_9hash_ring_8HashRing_2__dealloc__(struct __pyx_o
   __Pyx_RefNannyFinishContext();
 }
 
-/* "hash_ring/hash_ring.pyx":35
+/* "hash_ring/hash_ring.pyx":38
  *         hash_ring_free(self._ring)
  * 
  *     def add_node(self, name):             # <<<<<<<<<<<<<<
@@ -813,7 +856,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_4add_node(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("add_node", 0);
 
-  /* "hash_ring/hash_ring.pyx":36
+  /* "hash_ring/hash_ring.pyx":39
  * 
  *     def add_node(self, name):
  *         return hash_ring_add_node(self._ring, name, len(name)) == HASH_RING_OK             # <<<<<<<<<<<<<<
@@ -821,15 +864,15 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_4add_node(struct __pyx
  *     def remove_node(self, name):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_AsUString(__pyx_v_name); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_2 = PyObject_Length(__pyx_v_name); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_3 = __Pyx_PyBool_FromLong((hash_ring_add_node(__pyx_v_self->_ring, __pyx_t_1, __pyx_t_2) == HASH_RING_OK)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_AsUString(__pyx_v_name); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_Length(__pyx_v_name); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyBool_FromLong((hash_ring_add_node(__pyx_v_self->_ring, __pyx_t_1, __pyx_t_2) == HASH_RING_OK)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "hash_ring/hash_ring.pyx":35
+  /* "hash_ring/hash_ring.pyx":38
  *         hash_ring_free(self._ring)
  * 
  *     def add_node(self, name):             # <<<<<<<<<<<<<<
@@ -848,7 +891,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_4add_node(struct __pyx
   return __pyx_r;
 }
 
-/* "hash_ring/hash_ring.pyx":38
+/* "hash_ring/hash_ring.pyx":41
  *         return hash_ring_add_node(self._ring, name, len(name)) == HASH_RING_OK
  * 
  *     def remove_node(self, name):             # <<<<<<<<<<<<<<
@@ -880,7 +923,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_6remove_node(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("remove_node", 0);
 
-  /* "hash_ring/hash_ring.pyx":39
+  /* "hash_ring/hash_ring.pyx":42
  * 
  *     def remove_node(self, name):
  *         return hash_ring_remove_node(self._ring, name, len(name)) == HASH_RING_OK             # <<<<<<<<<<<<<<
@@ -888,15 +931,15 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_6remove_node(struct __
  *     def find_node(self, key):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_AsUString(__pyx_v_name); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_2 = PyObject_Length(__pyx_v_name); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_3 = __Pyx_PyBool_FromLong((hash_ring_remove_node(__pyx_v_self->_ring, __pyx_t_1, __pyx_t_2) == HASH_RING_OK)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_AsUString(__pyx_v_name); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_Length(__pyx_v_name); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyBool_FromLong((hash_ring_remove_node(__pyx_v_self->_ring, __pyx_t_1, __pyx_t_2) == HASH_RING_OK)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "hash_ring/hash_ring.pyx":38
+  /* "hash_ring/hash_ring.pyx":41
  *         return hash_ring_add_node(self._ring, name, len(name)) == HASH_RING_OK
  * 
  *     def remove_node(self, name):             # <<<<<<<<<<<<<<
@@ -915,7 +958,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_6remove_node(struct __
   return __pyx_r;
 }
 
-/* "hash_ring/hash_ring.pyx":41
+/* "hash_ring/hash_ring.pyx":44
  *         return hash_ring_remove_node(self._ring, name, len(name)) == HASH_RING_OK
  * 
  *     def find_node(self, key):             # <<<<<<<<<<<<<<
@@ -952,7 +995,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_8find_node(struct __py
   __Pyx_RefNannySetupContext("find_node", 0);
   __Pyx_INCREF(__pyx_v_key);
 
-  /* "hash_ring/hash_ring.pyx":42
+  /* "hash_ring/hash_ring.pyx":45
  * 
  *     def find_node(self, key):
  *         if not isinstance(key, bytes):             # <<<<<<<<<<<<<<
@@ -963,25 +1006,25 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_8find_node(struct __py
   __pyx_t_2 = ((!(__pyx_t_1 != 0)) != 0);
   if (__pyx_t_2) {
 
-    /* "hash_ring/hash_ring.pyx":43
+    /* "hash_ring/hash_ring.pyx":46
  *     def find_node(self, key):
  *         if not isinstance(key, bytes):
  *             key = bytes(key)             # <<<<<<<<<<<<<<
  *         node = hash_ring_find_node(self._ring, key, len(key))
  *         if node:
  */
-    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_v_key);
     __Pyx_GIVEREF(__pyx_v_key);
     PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_key);
-    __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF_SET(__pyx_v_key, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "hash_ring/hash_ring.pyx":42
+    /* "hash_ring/hash_ring.pyx":45
  * 
  *     def find_node(self, key):
  *         if not isinstance(key, bytes):             # <<<<<<<<<<<<<<
@@ -990,47 +1033,51 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_8find_node(struct __py
  */
   }
 
-  /* "hash_ring/hash_ring.pyx":44
+  /* "hash_ring/hash_ring.pyx":47
  *         if not isinstance(key, bytes):
  *             key = bytes(key)
  *         node = hash_ring_find_node(self._ring, key, len(key))             # <<<<<<<<<<<<<<
  *         if node:
  *             return node.name[:node.name_len]
  */
-  __pyx_t_5 = __Pyx_PyObject_AsUString(__pyx_v_key); if (unlikely((!__pyx_t_5) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_6 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 44; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_AsUString(__pyx_v_key); if (unlikely((!__pyx_t_5) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_node = hash_ring_find_node(__pyx_v_self->_ring, __pyx_t_5, __pyx_t_6);
 
-  /* "hash_ring/hash_ring.pyx":45
+  /* "hash_ring/hash_ring.pyx":48
  *             key = bytes(key)
  *         node = hash_ring_find_node(self._ring, key, len(key))
  *         if node:             # <<<<<<<<<<<<<<
  *             return node.name[:node.name_len]
+ * 
  */
   __pyx_t_2 = (__pyx_v_node != 0);
   if (__pyx_t_2) {
 
-    /* "hash_ring/hash_ring.pyx":46
+    /* "hash_ring/hash_ring.pyx":49
  *         node = hash_ring_find_node(self._ring, key, len(key))
  *         if node:
  *             return node.name[:node.name_len]             # <<<<<<<<<<<<<<
+ * 
+ *     def find_nodes(self, key, num=1):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 49; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_r = __pyx_t_4;
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "hash_ring/hash_ring.pyx":45
+    /* "hash_ring/hash_ring.pyx":48
  *             key = bytes(key)
  *         node = hash_ring_find_node(self._ring, key, len(key))
  *         if node:             # <<<<<<<<<<<<<<
  *             return node.name[:node.name_len]
+ * 
  */
   }
 
-  /* "hash_ring/hash_ring.pyx":41
+  /* "hash_ring/hash_ring.pyx":44
  *         return hash_ring_remove_node(self._ring, name, len(name)) == HASH_RING_OK
  * 
  *     def find_node(self, key):             # <<<<<<<<<<<<<<
@@ -1048,6 +1095,276 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_8find_node(struct __py
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_key);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hash_ring/hash_ring.pyx":51
+ *             return node.name[:node.name_len]
+ * 
+ *     def find_nodes(self, key, num=1):             # <<<<<<<<<<<<<<
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+ *         if not nodes:
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9hash_ring_9hash_ring_8HashRing_11find_nodes(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9hash_ring_9hash_ring_8HashRing_11find_nodes(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_key = 0;
+  PyObject *__pyx_v_num = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("find_nodes (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_key,&__pyx_n_s_num,0};
+    PyObject* values[2] = {0,0};
+    values[1] = ((PyObject *)__pyx_int_1);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_key)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_num);
+          if (value) { values[1] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "find_nodes") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_key = values[0];
+    __pyx_v_num = values[1];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("find_nodes", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("hash_ring.hash_ring.HashRing.find_nodes", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_9hash_ring_9hash_ring_8HashRing_10find_nodes(((struct __pyx_obj_9hash_ring_9hash_ring_HashRing *)__pyx_v_self), __pyx_v_key, __pyx_v_num);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_10find_nodes(struct __pyx_obj_9hash_ring_9hash_ring_HashRing *__pyx_v_self, PyObject *__pyx_v_key, PyObject *__pyx_v_num) {
+  hash_ring_node_t **__pyx_v_nodes;
+  int __pyx_v_n;
+  hash_ring_node_t *__pyx_v_node;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  size_t __pyx_t_3;
+  int __pyx_t_4;
+  unsigned char *__pyx_t_5;
+  Py_ssize_t __pyx_t_6;
+  unsigned int __pyx_t_7;
+  hash_ring_node_t **__pyx_t_8;
+  hash_ring_node_t **__pyx_t_9;
+  hash_ring_node_t **__pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
+  int __pyx_t_12;
+  int __pyx_t_13;
+  char const *__pyx_t_14;
+  PyObject *__pyx_t_15 = NULL;
+  PyObject *__pyx_t_16 = NULL;
+  PyObject *__pyx_t_17 = NULL;
+  PyObject *__pyx_t_18 = NULL;
+  PyObject *__pyx_t_19 = NULL;
+  PyObject *__pyx_t_20 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("find_nodes", 0);
+
+  /* "hash_ring/hash_ring.pyx":52
+ * 
+ *     def find_nodes(self, key, num=1):
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)             # <<<<<<<<<<<<<<
+ *         if not nodes:
+ *             raise MemoryError()
+ */
+  __pyx_t_1 = __Pyx_PyInt_FromSize_t((sizeof(hash_ring_node_t *))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_v_num); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_3 == (size_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_nodes = ((hash_ring_node_t **)malloc(__pyx_t_3));
+
+  /* "hash_ring/hash_ring.pyx":53
+ *     def find_nodes(self, key, num=1):
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+ *         if not nodes:             # <<<<<<<<<<<<<<
+ *             raise MemoryError()
+ *         try:
+ */
+  __pyx_t_4 = ((!(__pyx_v_nodes != 0)) != 0);
+  if (__pyx_t_4) {
+
+    /* "hash_ring/hash_ring.pyx":54
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+ *         if not nodes:
+ *             raise MemoryError()             # <<<<<<<<<<<<<<
+ *         try:
+ *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)
+ */
+    PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+    /* "hash_ring/hash_ring.pyx":53
+ *     def find_nodes(self, key, num=1):
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+ *         if not nodes:             # <<<<<<<<<<<<<<
+ *             raise MemoryError()
+ *         try:
+ */
+  }
+
+  /* "hash_ring/hash_ring.pyx":55
+ *         if not nodes:
+ *             raise MemoryError()
+ *         try:             # <<<<<<<<<<<<<<
+ *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)
+ *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []
+ */
+  /*try:*/ {
+
+    /* "hash_ring/hash_ring.pyx":56
+ *             raise MemoryError()
+ *         try:
+ *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)             # <<<<<<<<<<<<<<
+ *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []
+ *         finally:
+ */
+    __pyx_t_5 = __Pyx_PyObject_AsUString(__pyx_v_key); if (unlikely((!__pyx_t_5) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
+    __pyx_t_6 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
+    __pyx_t_7 = __Pyx_PyInt_As_unsigned_int(__pyx_v_num); if (unlikely((__pyx_t_7 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
+    __pyx_v_n = hash_ring_find_nodes(__pyx_v_self->_ring, __pyx_t_5, __pyx_t_6, __pyx_v_nodes, __pyx_t_7);
+
+    /* "hash_ring/hash_ring.pyx":57
+ *         try:
+ *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)
+ *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []             # <<<<<<<<<<<<<<
+ *         finally:
+ *             free(nodes)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    if (((__pyx_v_n > -1) != 0)) {
+      __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_9 = (__pyx_v_nodes + __pyx_v_n);
+      for (__pyx_t_10 = __pyx_v_nodes; __pyx_t_10 < __pyx_t_9; __pyx_t_10++) {
+        __pyx_t_8 = __pyx_t_10;
+        __pyx_v_node = (__pyx_t_8[0]);
+        __pyx_t_11 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
+        __Pyx_GOTREF(__pyx_t_11);
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_11))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+      }
+      __pyx_t_2 = __pyx_t_1;
+      __pyx_t_1 = 0;
+    } else {
+      __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_2 = __pyx_t_1;
+      __pyx_t_1 = 0;
+    }
+    __pyx_r = __pyx_t_2;
+    __pyx_t_2 = 0;
+    goto __pyx_L4_return;
+  }
+
+  /* "hash_ring/hash_ring.pyx":59
+ *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []
+ *         finally:
+ *             free(nodes)             # <<<<<<<<<<<<<<
+ */
+  /*finally:*/ {
+    /*exception exit:*/{
+      __pyx_L5_error:;
+      __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0;
+      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
+      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_18, &__pyx_t_19, &__pyx_t_20);
+      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17) < 0)) __Pyx_ErrFetch(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17);
+      __Pyx_XGOTREF(__pyx_t_15);
+      __Pyx_XGOTREF(__pyx_t_16);
+      __Pyx_XGOTREF(__pyx_t_17);
+      __Pyx_XGOTREF(__pyx_t_18);
+      __Pyx_XGOTREF(__pyx_t_19);
+      __Pyx_XGOTREF(__pyx_t_20);
+      __pyx_t_12 = __pyx_lineno; __pyx_t_13 = __pyx_clineno; __pyx_t_14 = __pyx_filename;
+      {
+        free(__pyx_v_nodes);
+      }
+      if (PY_MAJOR_VERSION >= 3) {
+        __Pyx_XGIVEREF(__pyx_t_18);
+        __Pyx_XGIVEREF(__pyx_t_19);
+        __Pyx_XGIVEREF(__pyx_t_20);
+        __Pyx_ExceptionReset(__pyx_t_18, __pyx_t_19, __pyx_t_20);
+      }
+      __Pyx_XGIVEREF(__pyx_t_15);
+      __Pyx_XGIVEREF(__pyx_t_16);
+      __Pyx_XGIVEREF(__pyx_t_17);
+      __Pyx_ErrRestore(__pyx_t_15, __pyx_t_16, __pyx_t_17);
+      __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0;
+      __pyx_lineno = __pyx_t_12; __pyx_clineno = __pyx_t_13; __pyx_filename = __pyx_t_14;
+      goto __pyx_L1_error;
+    }
+    __pyx_L4_return: {
+      __pyx_t_20 = __pyx_r;
+      __pyx_r = 0;
+      free(__pyx_v_nodes);
+      __pyx_r = __pyx_t_20;
+      __pyx_t_20 = 0;
+      goto __pyx_L0;
+    }
+  }
+
+  /* "hash_ring/hash_ring.pyx":51
+ *             return node.name[:node.name_len]
+ * 
+ *     def find_nodes(self, key, num=1):             # <<<<<<<<<<<<<<
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+ *         if not nodes:
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_AddTraceback("hash_ring.hash_ring.HashRing.find_nodes", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -1088,6 +1405,7 @@ static PyMethodDef __pyx_methods_9hash_ring_9hash_ring_HashRing[] = {
   {"add_node", (PyCFunction)__pyx_pw_9hash_ring_9hash_ring_8HashRing_5add_node, METH_O, 0},
   {"remove_node", (PyCFunction)__pyx_pw_9hash_ring_9hash_ring_8HashRing_7remove_node, METH_O, 0},
   {"find_node", (PyCFunction)__pyx_pw_9hash_ring_9hash_ring_8HashRing_9find_node, METH_O, 0},
+  {"find_nodes", (PyCFunction)__pyx_pw_9hash_ring_9hash_ring_8HashRing_11find_nodes, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -1174,14 +1492,20 @@ static struct PyModuleDef __pyx_moduledef = {
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_HASH_FUNCTION_MD5, __pyx_k_HASH_FUNCTION_MD5, sizeof(__pyx_k_HASH_FUNCTION_MD5), 0, 0, 1, 1},
   {&__pyx_n_s_HASH_FUNCTION_SHA1, __pyx_k_HASH_FUNCTION_SHA1, sizeof(__pyx_k_HASH_FUNCTION_SHA1), 0, 0, 1, 1},
+  {&__pyx_n_s_MemoryError, __pyx_k_MemoryError, sizeof(__pyx_k_MemoryError), 0, 0, 1, 1},
   {&__pyx_n_s_hash_fn, __pyx_k_hash_fn, sizeof(__pyx_k_hash_fn), 0, 0, 1, 1},
+  {&__pyx_n_s_key, __pyx_k_key, sizeof(__pyx_k_key), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
+  {&__pyx_n_s_num, __pyx_k_num, sizeof(__pyx_k_num), 0, 0, 1, 1},
   {&__pyx_n_s_num_replicas, __pyx_k_num_replicas, sizeof(__pyx_k_num_replicas), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
+  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
+  __pyx_L1_error:;
+  return -1;
 }
 
 static int __Pyx_InitCachedConstants(void) {
@@ -1193,6 +1517,7 @@ static int __Pyx_InitCachedConstants(void) {
 
 static int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_int_128 = PyInt_FromLong(128); if (unlikely(!__pyx_int_128)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
   __pyx_L1_error:;
@@ -1285,9 +1610,9 @@ PyMODINIT_FUNC PyInit_hash_ring(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_9hash_ring_9hash_ring_HashRing) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_9hash_ring_9hash_ring_HashRing) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_9hash_ring_9hash_ring_HashRing.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "HashRing", (PyObject *)&__pyx_type_9hash_ring_9hash_ring_HashRing) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "HashRing", (PyObject *)&__pyx_type_9hash_ring_9hash_ring_HashRing) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_9hash_ring_9hash_ring_HashRing = &__pyx_type_9hash_ring_9hash_ring_HashRing;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
@@ -1297,47 +1622,47 @@ PyMODINIT_FUNC PyInit_hash_ring(void)
   if (__Pyx_patch_abc() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
 
-  /* "hash_ring/hash_ring.pyx":23
+  /* "hash_ring/hash_ring.pyx":26
  *     int hash_ring_remove_node(hash_ring_t *ring, unsigned char *name, unsigned int name_len)
  * 
  * HASH_FUNCTION_SHA1 = _HASH_FUNCTION_SHA1             # <<<<<<<<<<<<<<
  * HASH_FUNCTION_MD5 = _HASH_FUNCTION_MD5
  * 
  */
-  __pyx_t_1 = __Pyx_PyInt_From_HASH_FUNCTION(HASH_FUNCTION_SHA1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_HASH_FUNCTION(HASH_FUNCTION_SHA1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_HASH_FUNCTION_SHA1, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_HASH_FUNCTION_SHA1, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hash_ring/hash_ring.pyx":24
+  /* "hash_ring/hash_ring.pyx":27
  * 
  * HASH_FUNCTION_SHA1 = _HASH_FUNCTION_SHA1
  * HASH_FUNCTION_MD5 = _HASH_FUNCTION_MD5             # <<<<<<<<<<<<<<
  * 
  * cdef class HashRing:
  */
-  __pyx_t_1 = __Pyx_PyInt_From_HASH_FUNCTION(HASH_FUNCTION_MD5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 24; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_HASH_FUNCTION(HASH_FUNCTION_MD5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_HASH_FUNCTION_MD5, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 24; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_HASH_FUNCTION_MD5, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hash_ring/hash_ring.pyx":29
+  /* "hash_ring/hash_ring.pyx":32
  *     cdef hash_ring_t *_ring
  * 
  *     def __cinit__(self, num_replicas=128, hash_fn=HASH_FUNCTION_MD5):             # <<<<<<<<<<<<<<
  *         self._ring = hash_ring_create(num_replicas, hash_fn)
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HASH_FUNCTION_MD5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HASH_FUNCTION_MD5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_k_ = __pyx_t_1;
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "hash_ring/hash_ring.pyx":1
- * cdef extern from 'hash_ring.h':             # <<<<<<<<<<<<<<
- *     cdef int HASH_RING_OK
- *     cdef int HASH_RING_ERR
+ * from libc.stdlib cimport malloc, free             # <<<<<<<<<<<<<<
+ * 
+ * cdef extern from 'hash_ring.h':
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
@@ -1382,6 +1707,19 @@ end:
     return (__Pyx_RefNannyAPIStruct *)r;
 }
 #endif
+
+static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
+    PyObject* result = __Pyx_PyObject_GetAttrStr(__pyx_b, name);
+    if (unlikely(!result)) {
+        PyErr_Format(PyExc_NameError,
+#if PY_MAJOR_VERSION >= 3
+            "name '%U' is not defined", name);
+#else
+            "name '%.200s' is not defined", PyString_AS_STRING(name));
+#endif
+    }
+    return result;
+}
 
 static void __Pyx_RaiseDoubleKeywordsError(
     const char* func_name,
@@ -1541,17 +1879,142 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 }
 #endif
 
-static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
-    PyObject* result = __Pyx_PyObject_GetAttrStr(__pyx_b, name);
-    if (unlikely(!result)) {
-        PyErr_Format(PyExc_NameError,
-#if PY_MAJOR_VERSION >= 3
-            "name '%U' is not defined", name);
+static CYTHON_INLINE void __Pyx_ErrRestore(PyObject *type, PyObject *value, PyObject *tb) {
+#if CYTHON_COMPILING_IN_CPYTHON
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    PyThreadState *tstate = PyThreadState_GET();
+    tmp_type = tstate->curexc_type;
+    tmp_value = tstate->curexc_value;
+    tmp_tb = tstate->curexc_traceback;
+    tstate->curexc_type = type;
+    tstate->curexc_value = value;
+    tstate->curexc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
 #else
-            "name '%.200s' is not defined", PyString_AS_STRING(name));
+    PyErr_Restore(type, value, tb);
 #endif
+}
+static CYTHON_INLINE void __Pyx_ErrFetch(PyObject **type, PyObject **value, PyObject **tb) {
+#if CYTHON_COMPILING_IN_CPYTHON
+    PyThreadState *tstate = PyThreadState_GET();
+    *type = tstate->curexc_type;
+    *value = tstate->curexc_value;
+    *tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
+#else
+    PyErr_Fetch(type, value, tb);
+#endif
+}
+
+static int __Pyx_GetException(PyObject **type, PyObject **value, PyObject **tb) {
+    PyObject *local_type, *local_value, *local_tb;
+#if CYTHON_COMPILING_IN_CPYTHON
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    PyThreadState *tstate = PyThreadState_GET();
+    local_type = tstate->curexc_type;
+    local_value = tstate->curexc_value;
+    local_tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
+#else
+    PyErr_Fetch(&local_type, &local_value, &local_tb);
+#endif
+    PyErr_NormalizeException(&local_type, &local_value, &local_tb);
+#if CYTHON_COMPILING_IN_CPYTHON
+    if (unlikely(tstate->curexc_type))
+#else
+    if (unlikely(PyErr_Occurred()))
+#endif
+        goto bad;
+    #if PY_MAJOR_VERSION >= 3
+    if (local_tb) {
+        if (unlikely(PyException_SetTraceback(local_value, local_tb) < 0))
+            goto bad;
     }
-    return result;
+    #endif
+    Py_XINCREF(local_tb);
+    Py_XINCREF(local_type);
+    Py_XINCREF(local_value);
+    *type = local_type;
+    *value = local_value;
+    *tb = local_tb;
+#if CYTHON_COMPILING_IN_CPYTHON
+    tmp_type = tstate->exc_type;
+    tmp_value = tstate->exc_value;
+    tmp_tb = tstate->exc_traceback;
+    tstate->exc_type = local_type;
+    tstate->exc_value = local_value;
+    tstate->exc_traceback = local_tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
+#else
+    PyErr_SetExcInfo(local_type, local_value, local_tb);
+#endif
+    return 0;
+bad:
+    *type = 0;
+    *value = 0;
+    *tb = 0;
+    Py_XDECREF(local_type);
+    Py_XDECREF(local_value);
+    Py_XDECREF(local_tb);
+    return -1;
+}
+
+static CYTHON_INLINE void __Pyx_ExceptionSwap(PyObject **type, PyObject **value, PyObject **tb) {
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+#if CYTHON_COMPILING_IN_CPYTHON
+    PyThreadState *tstate = PyThreadState_GET();
+    tmp_type = tstate->exc_type;
+    tmp_value = tstate->exc_value;
+    tmp_tb = tstate->exc_traceback;
+    tstate->exc_type = *type;
+    tstate->exc_value = *value;
+    tstate->exc_traceback = *tb;
+#else
+    PyErr_GetExcInfo(&tmp_type, &tmp_value, &tmp_tb);
+    PyErr_SetExcInfo(*type, *value, *tb);
+#endif
+    *type = tmp_type;
+    *value = tmp_value;
+    *tb = tmp_tb;
+}
+
+static CYTHON_INLINE void __Pyx_ExceptionSave(PyObject **type, PyObject **value, PyObject **tb) {
+#if CYTHON_COMPILING_IN_CPYTHON
+    PyThreadState *tstate = PyThreadState_GET();
+    *type = tstate->exc_type;
+    *value = tstate->exc_value;
+    *tb = tstate->exc_traceback;
+    Py_XINCREF(*type);
+    Py_XINCREF(*value);
+    Py_XINCREF(*tb);
+#else
+    PyErr_GetExcInfo(type, value, tb);
+#endif
+}
+static void __Pyx_ExceptionReset(PyObject *type, PyObject *value, PyObject *tb) {
+#if CYTHON_COMPILING_IN_CPYTHON
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    PyThreadState *tstate = PyThreadState_GET();
+    tmp_type = tstate->exc_type;
+    tmp_value = tstate->exc_value;
+    tmp_tb = tstate->exc_traceback;
+    tstate->exc_type = type;
+    tstate->exc_value = value;
+    tstate->exc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
+#else
+    PyErr_SetExcInfo(type, value, tb);
+#endif
 }
 
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
@@ -2147,6 +2610,190 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to HASH_FUNCTION");
     return (HASH_FUNCTION) -1;
+}
+
+static CYTHON_INLINE size_t __Pyx_PyInt_As_size_t(PyObject *x) {
+    const size_t neg_one = (size_t) -1, const_zero = (size_t) 0;
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if (sizeof(size_t) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(size_t, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (size_t) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (size_t) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(size_t, digit, digits[0])
+                case 2:
+                    if (8 * sizeof(size_t) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) >= 2 * PyLong_SHIFT) {
+                            return (size_t) (((((size_t)digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(size_t) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) >= 3 * PyLong_SHIFT) {
+                            return (size_t) (((((((size_t)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(size_t) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) >= 4 * PyLong_SHIFT) {
+                            return (size_t) (((((((((size_t)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+            }
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+#else
+            {
+                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                if (unlikely(result < 0))
+                    return (size_t) -1;
+                if (unlikely(result == 1))
+                    goto raise_neg_overflow;
+            }
+#endif
+            if (sizeof(size_t) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(size_t, unsigned long, PyLong_AsUnsignedLong(x))
+            } else if (sizeof(size_t) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(size_t, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+            }
+        } else {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (size_t) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(size_t, sdigit, -(sdigit) digits[0])
+                case  1: __PYX_VERIFY_RETURN_INT(size_t,  digit, +digits[0])
+                case -2:
+                    if (8 * sizeof(size_t) - 1 > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 2 * PyLong_SHIFT) {
+                            return (size_t) -(((((size_t)digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 2:
+                    if (8 * sizeof(size_t) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 2 * PyLong_SHIFT) {
+                            return (size_t) (((((size_t)digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case -3:
+                    if (8 * sizeof(size_t) - 1 > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 3 * PyLong_SHIFT) {
+                            return (size_t) -(((((((size_t)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(size_t) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 3 * PyLong_SHIFT) {
+                            return (size_t) (((((((size_t)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case -4:
+                    if (8 * sizeof(size_t) - 1 > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 4 * PyLong_SHIFT) {
+                            return (size_t) -(((((((((size_t)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(size_t) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(size_t, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(size_t) - 1 > 4 * PyLong_SHIFT) {
+                            return (size_t) (((((((((size_t)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+            }
+#endif
+            if (sizeof(size_t) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(size_t, long, PyLong_AsLong(x))
+            } else if (sizeof(size_t) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(size_t, PY_LONG_LONG, PyLong_AsLongLong(x))
+            }
+        }
+        {
+#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
+            PyErr_SetString(PyExc_RuntimeError,
+                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
+#else
+            size_t val;
+            PyObject *v = __Pyx_PyNumber_Int(x);
+ #if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+ #endif
+            if (likely(v)) {
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                int ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                              bytes, sizeof(val),
+                                              is_little, !is_unsigned);
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+#endif
+            return (size_t) -1;
+        }
+    } else {
+        size_t val;
+        PyObject *tmp = __Pyx_PyNumber_Int(x);
+        if (!tmp) return (size_t) -1;
+        val = __Pyx_PyInt_As_size_t(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to size_t");
+    return (size_t) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to size_t");
+    return (size_t) -1;
 }
 
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
