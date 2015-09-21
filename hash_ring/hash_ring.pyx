@@ -49,6 +49,8 @@ cdef class HashRing:
             return node.name[:node.name_len]
 
     def find_nodes(self, key, num=1):
+        if not isinstance(key, bytes):
+            key = bytes(key)
         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
         if not nodes:
             raise MemoryError()

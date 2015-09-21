@@ -1104,8 +1104,8 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_8find_node(struct __py
  *             return node.name[:node.name_len]
  * 
  *     def find_nodes(self, key, num=1):             # <<<<<<<<<<<<<<
- *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
- *         if not nodes:
+ *         if not isinstance(key, bytes):
+ *             key = bytes(key)
  */
 
 /* Python wrapper */
@@ -1178,68 +1178,108 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_10find_nodes(struct __
   hash_ring_node_t *__pyx_v_node;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  size_t __pyx_t_3;
-  int __pyx_t_4;
-  unsigned char *__pyx_t_5;
-  Py_ssize_t __pyx_t_6;
-  unsigned int __pyx_t_7;
-  hash_ring_node_t **__pyx_t_8;
+  int __pyx_t_1;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  size_t __pyx_t_5;
+  unsigned char *__pyx_t_6;
+  Py_ssize_t __pyx_t_7;
+  unsigned int __pyx_t_8;
   hash_ring_node_t **__pyx_t_9;
   hash_ring_node_t **__pyx_t_10;
-  PyObject *__pyx_t_11 = NULL;
-  int __pyx_t_12;
+  hash_ring_node_t **__pyx_t_11;
+  PyObject *__pyx_t_12 = NULL;
   int __pyx_t_13;
-  char const *__pyx_t_14;
-  PyObject *__pyx_t_15 = NULL;
+  int __pyx_t_14;
+  char const *__pyx_t_15;
   PyObject *__pyx_t_16 = NULL;
   PyObject *__pyx_t_17 = NULL;
   PyObject *__pyx_t_18 = NULL;
   PyObject *__pyx_t_19 = NULL;
   PyObject *__pyx_t_20 = NULL;
+  PyObject *__pyx_t_21 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("find_nodes", 0);
+  __Pyx_INCREF(__pyx_v_key);
 
   /* "hash_ring/hash_ring.pyx":52
  * 
  *     def find_nodes(self, key, num=1):
+ *         if not isinstance(key, bytes):             # <<<<<<<<<<<<<<
+ *             key = bytes(key)
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+ */
+  __pyx_t_1 = PyBytes_Check(__pyx_v_key); 
+  __pyx_t_2 = ((!(__pyx_t_1 != 0)) != 0);
+  if (__pyx_t_2) {
+
+    /* "hash_ring/hash_ring.pyx":53
+ *     def find_nodes(self, key, num=1):
+ *         if not isinstance(key, bytes):
+ *             key = bytes(key)             # <<<<<<<<<<<<<<
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+ *         if not nodes:
+ */
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_INCREF(__pyx_v_key);
+    __Pyx_GIVEREF(__pyx_v_key);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_key);
+    __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF_SET(__pyx_v_key, __pyx_t_4);
+    __pyx_t_4 = 0;
+
+    /* "hash_ring/hash_ring.pyx":52
+ * 
+ *     def find_nodes(self, key, num=1):
+ *         if not isinstance(key, bytes):             # <<<<<<<<<<<<<<
+ *             key = bytes(key)
+ *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
+ */
+  }
+
+  /* "hash_ring/hash_ring.pyx":54
+ *         if not isinstance(key, bytes):
+ *             key = bytes(key)
  *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)             # <<<<<<<<<<<<<<
  *         if not nodes:
  *             raise MemoryError()
  */
-  __pyx_t_1 = __Pyx_PyInt_FromSize_t((sizeof(hash_ring_node_t *))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_v_num); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_3 == (size_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_nodes = ((hash_ring_node_t **)malloc(__pyx_t_3));
+  __pyx_t_4 = __Pyx_PyInt_FromSize_t((sizeof(hash_ring_node_t *))); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_4, __pyx_v_num); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_5 = __Pyx_PyInt_As_size_t(__pyx_t_3); if (unlikely((__pyx_t_5 == (size_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_v_nodes = ((hash_ring_node_t **)malloc(__pyx_t_5));
 
-  /* "hash_ring/hash_ring.pyx":53
- *     def find_nodes(self, key, num=1):
+  /* "hash_ring/hash_ring.pyx":55
+ *             key = bytes(key)
  *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
  *         if not nodes:             # <<<<<<<<<<<<<<
  *             raise MemoryError()
  *         try:
  */
-  __pyx_t_4 = ((!(__pyx_v_nodes != 0)) != 0);
-  if (__pyx_t_4) {
+  __pyx_t_2 = ((!(__pyx_v_nodes != 0)) != 0);
+  if (__pyx_t_2) {
 
-    /* "hash_ring/hash_ring.pyx":54
+    /* "hash_ring/hash_ring.pyx":56
  *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
  *         if not nodes:
  *             raise MemoryError()             # <<<<<<<<<<<<<<
  *         try:
  *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)
  */
-    PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "hash_ring/hash_ring.pyx":53
- *     def find_nodes(self, key, num=1):
+    /* "hash_ring/hash_ring.pyx":55
+ *             key = bytes(key)
  *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
  *         if not nodes:             # <<<<<<<<<<<<<<
  *             raise MemoryError()
@@ -1247,7 +1287,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_10find_nodes(struct __
  */
   }
 
-  /* "hash_ring/hash_ring.pyx":55
+  /* "hash_ring/hash_ring.pyx":57
  *         if not nodes:
  *             raise MemoryError()
  *         try:             # <<<<<<<<<<<<<<
@@ -1256,19 +1296,19 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_10find_nodes(struct __
  */
   /*try:*/ {
 
-    /* "hash_ring/hash_ring.pyx":56
+    /* "hash_ring/hash_ring.pyx":58
  *             raise MemoryError()
  *         try:
  *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)             # <<<<<<<<<<<<<<
  *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []
  *         finally:
  */
-    __pyx_t_5 = __Pyx_PyObject_AsUString(__pyx_v_key); if (unlikely((!__pyx_t_5) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
-    __pyx_t_6 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
-    __pyx_t_7 = __Pyx_PyInt_As_unsigned_int(__pyx_v_num); if (unlikely((__pyx_t_7 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
-    __pyx_v_n = hash_ring_find_nodes(__pyx_v_self->_ring, __pyx_t_5, __pyx_t_6, __pyx_v_nodes, __pyx_t_7);
+    __pyx_t_6 = __Pyx_PyObject_AsUString(__pyx_v_key); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L6_error;}
+    __pyx_t_7 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L6_error;}
+    __pyx_t_8 = __Pyx_PyInt_As_unsigned_int(__pyx_v_num); if (unlikely((__pyx_t_8 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L6_error;}
+    __pyx_v_n = hash_ring_find_nodes(__pyx_v_self->_ring, __pyx_t_6, __pyx_t_7, __pyx_v_nodes, __pyx_t_8);
 
-    /* "hash_ring/hash_ring.pyx":57
+    /* "hash_ring/hash_ring.pyx":59
  *         try:
  *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)
  *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []             # <<<<<<<<<<<<<<
@@ -1277,74 +1317,74 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_10find_nodes(struct __
  */
     __Pyx_XDECREF(__pyx_r);
     if (((__pyx_v_n > -1) != 0)) {
-      __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_9 = (__pyx_v_nodes + __pyx_v_n);
-      for (__pyx_t_10 = __pyx_v_nodes; __pyx_t_10 < __pyx_t_9; __pyx_t_10++) {
-        __pyx_t_8 = __pyx_t_10;
-        __pyx_v_node = (__pyx_t_8[0]);
-        __pyx_t_11 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
-        __Pyx_GOTREF(__pyx_t_11);
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_11))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+      __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 59; __pyx_clineno = __LINE__; goto __pyx_L6_error;}
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_10 = (__pyx_v_nodes + __pyx_v_n);
+      for (__pyx_t_11 = __pyx_v_nodes; __pyx_t_11 < __pyx_t_10; __pyx_t_11++) {
+        __pyx_t_9 = __pyx_t_11;
+        __pyx_v_node = (__pyx_t_9[0]);
+        __pyx_t_12 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 59; __pyx_clineno = __LINE__; goto __pyx_L6_error;}
+        __Pyx_GOTREF(__pyx_t_12);
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_12))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 59; __pyx_clineno = __LINE__; goto __pyx_L6_error;}
+        __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       }
-      __pyx_t_2 = __pyx_t_1;
-      __pyx_t_1 = 0;
+      __pyx_t_3 = __pyx_t_4;
+      __pyx_t_4 = 0;
     } else {
-      __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L5_error;}
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_2 = __pyx_t_1;
-      __pyx_t_1 = 0;
+      __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 59; __pyx_clineno = __LINE__; goto __pyx_L6_error;}
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = __pyx_t_4;
+      __pyx_t_4 = 0;
     }
-    __pyx_r = __pyx_t_2;
-    __pyx_t_2 = 0;
-    goto __pyx_L4_return;
+    __pyx_r = __pyx_t_3;
+    __pyx_t_3 = 0;
+    goto __pyx_L5_return;
   }
 
-  /* "hash_ring/hash_ring.pyx":59
+  /* "hash_ring/hash_ring.pyx":61
  *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []
  *         finally:
  *             free(nodes)             # <<<<<<<<<<<<<<
  */
   /*finally:*/ {
     /*exception exit:*/{
-      __pyx_L5_error:;
-      __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0;
-      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_18, &__pyx_t_19, &__pyx_t_20);
-      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17) < 0)) __Pyx_ErrFetch(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17);
-      __Pyx_XGOTREF(__pyx_t_15);
+      __pyx_L6_error:;
+      __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0; __pyx_t_21 = 0;
+      __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_19, &__pyx_t_20, &__pyx_t_21);
+      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_16, &__pyx_t_17, &__pyx_t_18) < 0)) __Pyx_ErrFetch(&__pyx_t_16, &__pyx_t_17, &__pyx_t_18);
       __Pyx_XGOTREF(__pyx_t_16);
       __Pyx_XGOTREF(__pyx_t_17);
       __Pyx_XGOTREF(__pyx_t_18);
       __Pyx_XGOTREF(__pyx_t_19);
       __Pyx_XGOTREF(__pyx_t_20);
-      __pyx_t_12 = __pyx_lineno; __pyx_t_13 = __pyx_clineno; __pyx_t_14 = __pyx_filename;
+      __Pyx_XGOTREF(__pyx_t_21);
+      __pyx_t_13 = __pyx_lineno; __pyx_t_14 = __pyx_clineno; __pyx_t_15 = __pyx_filename;
       {
         free(__pyx_v_nodes);
       }
       if (PY_MAJOR_VERSION >= 3) {
-        __Pyx_XGIVEREF(__pyx_t_18);
         __Pyx_XGIVEREF(__pyx_t_19);
         __Pyx_XGIVEREF(__pyx_t_20);
-        __Pyx_ExceptionReset(__pyx_t_18, __pyx_t_19, __pyx_t_20);
+        __Pyx_XGIVEREF(__pyx_t_21);
+        __Pyx_ExceptionReset(__pyx_t_19, __pyx_t_20, __pyx_t_21);
       }
-      __Pyx_XGIVEREF(__pyx_t_15);
       __Pyx_XGIVEREF(__pyx_t_16);
       __Pyx_XGIVEREF(__pyx_t_17);
-      __Pyx_ErrRestore(__pyx_t_15, __pyx_t_16, __pyx_t_17);
-      __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0;
-      __pyx_lineno = __pyx_t_12; __pyx_clineno = __pyx_t_13; __pyx_filename = __pyx_t_14;
+      __Pyx_XGIVEREF(__pyx_t_18);
+      __Pyx_ErrRestore(__pyx_t_16, __pyx_t_17, __pyx_t_18);
+      __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0; __pyx_t_21 = 0;
+      __pyx_lineno = __pyx_t_13; __pyx_clineno = __pyx_t_14; __pyx_filename = __pyx_t_15;
       goto __pyx_L1_error;
     }
-    __pyx_L4_return: {
-      __pyx_t_20 = __pyx_r;
+    __pyx_L5_return: {
+      __pyx_t_21 = __pyx_r;
       __pyx_r = 0;
       free(__pyx_v_nodes);
-      __pyx_r = __pyx_t_20;
-      __pyx_t_20 = 0;
+      __pyx_r = __pyx_t_21;
+      __pyx_t_21 = 0;
       goto __pyx_L0;
     }
   }
@@ -1353,18 +1393,19 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_10find_nodes(struct __
  *             return node.name[:node.name_len]
  * 
  *     def find_nodes(self, key, num=1):             # <<<<<<<<<<<<<<
- *         cdef hash_ring_node_t **nodes = <hash_ring_node_t **>malloc(sizeof(hash_ring_node_t *) * num)
- *         if not nodes:
+ *         if not isinstance(key, bytes):
+ *             key = bytes(key)
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_12);
   __Pyx_AddTraceback("hash_ring.hash_ring.HashRing.find_nodes", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_key);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -1502,7 +1543,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
   __pyx_L1_error:;
   return -1;
