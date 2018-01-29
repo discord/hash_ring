@@ -60,6 +60,7 @@ typedef uint8_t HASH_FUNCTION;
 typedef struct hash_ring_node_t {
     uint8_t *name;
     uint32_t nameLen;
+    uint32_t numReplicas;
 } hash_ring_node_t;
 
 /**
@@ -77,8 +78,6 @@ typedef struct hash_ring_item_t {
  * a list of nodes. A node appears in the ring numReplicas times.
  */
 typedef struct hash_ring_t {
-    uint32_t numReplicas;
-    
     /* List of nodes in the ring */
     ll_t *nodes;
     
@@ -108,12 +107,11 @@ typedef struct hash_ring_t {
  * more evenly. Increasing numReplicas improves distribution, but also increases memory by
  * (numReplicas * N).
  *
- * @param[in] numReplicas The number of replicas
  * @param[in] hash_fn The hash function to use. HASH_FUNCTION_SHA1 or HASH_FUNCTION_MD5
  *
  * @returns a new hash ring or NULL if it couldn't be created.
  */
-hash_ring_t *hash_ring_create(uint32_t numReplicas, HASH_FUNCTION hash_fn);
+hash_ring_t *hash_ring_create(HASH_FUNCTION hash_fn);
 
 
 /**
@@ -129,9 +127,10 @@ void hash_ring_free(hash_ring_t *ring);
  * This function is idempotent, a node will only ever exist in the ring once, regardless
  * of how many times it is added.
  *
+ * @param[in] numReplicas The number of replicas this node shall contain.
  * @returns HASH_RING_OK if the node was added, HASH_RING_ERR if an error occurred.
  */
-int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen);
+int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen, uint32_t numReplicas);
 
 
 /**

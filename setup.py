@@ -23,7 +23,7 @@ ext = Extension('hash_ring.hash_ring', src, include_dirs=['contrib'])
 
 setup(
     name='hash_ring',
-    version='0.0.1',
+    version='0.0.2',
     packages=find_packages(),
     zip_safe=False,
     cmdclass=cmdclass,
