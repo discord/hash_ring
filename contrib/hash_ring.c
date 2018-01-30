@@ -197,6 +197,7 @@ int hash_ring_add_items(hash_ring_t *ring, hash_ring_node_t *node) {
 
         hash_ring_item_t *item = (hash_ring_item_t*)malloc(sizeof(hash_ring_item_t));
         if (item == NULL) {
+            free(data);
             return HASH_RING_ERR;
         }
         item->node = node;
