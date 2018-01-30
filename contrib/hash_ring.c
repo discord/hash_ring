@@ -157,7 +157,7 @@ void hash_ring_print(hash_ring_t *ring) {
     
     printf("\n");
     printf("----------------------------------------\n");
-    
+
 }
 
 int hash_ring_add_items(hash_ring_t *ring, hash_ring_node_t *node) {
@@ -174,6 +174,12 @@ int hash_ring_add_items(hash_ring_t *ring, hash_ring_node_t *node) {
     }
     ring->items = (hash_ring_item_t**)resized;
 
+    uint8_t *data = (uint8_t*)malloc(sizeof(concat_buf) + node->nameLen);
+    if(data == NULL) {
+        return HASH_RING_ERR;
+    }
+    memcpy(data, node->name, node->nameLen);
+
     for(x = 0; x < node->numReplicas; x++) {
         if(ring->mode == HASH_RING_MODE_LIBMEMCACHED_COMPAT) {
             concat_len = snprintf(concat_buf, sizeof(concat_buf), "-%d", x);
@@ -182,24 +188,24 @@ int hash_ring_add_items(hash_ring_t *ring, hash_ring_node_t *node) {
             concat_len = snprintf(concat_buf, sizeof(concat_buf), "%d", x);
         }
 
-        uint8_t *data = (uint8_t*)malloc(concat_len + node->nameLen);
-        memcpy(data, node->name, node->nameLen);
         memcpy(data + node->nameLen, &concat_buf, concat_len);
 
         if(hash_ring_hash(ring, data, concat_len + node->nameLen, &keyInt) == -1) {
             free(data);
             return HASH_RING_ERR;
         }
-        free(data);
 
         hash_ring_item_t *item = (hash_ring_item_t*)malloc(sizeof(hash_ring_item_t));
+        if (item == NULL) {
+            return HASH_RING_ERR;
+        }
         item->node = node;
         item->number = keyInt;
 
-        ring->items[ring->numItems + x] = item;
+        ring->items[ring->numItems++] = item;
     }
 
-    ring->numItems += node->numReplicas;
+    free(data);
     return HASH_RING_OK;
 }
 
