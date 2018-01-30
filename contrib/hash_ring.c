@@ -296,18 +296,20 @@ int hash_ring_remove_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen) {
                 }
                 
                 int x;
+                uint32_t itemsRemoved = 0;
                 // Remove all items for this node and mark them as NULL
                 for(x = 0; x < ring->numItems; x++) {
                     if(ring->items[x]->node == node) {
                         free(ring->items[x]);
                         ring->items[x] = NULL;
+                        itemsRemoved++;
                     }
                 }
                 
                 // By re-sorting, all the NULLs will be at the end of the array
                 // Then the numItems is reset and that memory is no longer used
                 quicksort((void**)ring->items, ring->numItems, item_sort);
-                ring->numItems -= node->numReplicas;
+                ring->numItems -= itemsRemoved;
                 
                 free(node);
                 free(cur);
