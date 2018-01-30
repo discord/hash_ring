@@ -27,18 +27,14 @@
 
 static int item_sort(void *a, void *b);
 
-hash_ring_t *hash_ring_create(uint32_t numReplicas, HASH_FUNCTION hash_fn) {
+hash_ring_t *hash_ring_create(HASH_FUNCTION hash_fn) {
     hash_ring_t *ring = NULL;
-    
-    // numReplicas must be greater than or equal to 1
-    if(numReplicas <= 0) return NULL;
-    
+
     // Make sure that the HASH_FUNCTION is supported
     if(hash_fn != HASH_FUNCTION_MD5 && hash_fn != HASH_FUNCTION_SHA1) return NULL;
     
     ring = (hash_ring_t*)malloc(sizeof(hash_ring_t));
     
-    ring->numReplicas = numReplicas;
     ring->nodes = NULL;
     ring->items = NULL;
     ring->numNodes = 0;
@@ -130,7 +126,6 @@ void hash_ring_print(hash_ring_t *ring) {
     
     printf("----------------------------------------\n");
     printf("hash_ring\n\n");
-    printf("numReplicas:%8d\n", ring->numReplicas);
     printf("Nodes: \n\n");
     
     ll_t *cur = ring->nodes;
@@ -143,6 +138,7 @@ void hash_ring_print(hash_ring_t *ring) {
         for(y = 0; y < node->nameLen; y++) {
             printf("%c", node->name[y]);
         }
+        printf(" (%d replicas)", node->numReplicas);
         printf("\n");
         cur = cur->next;
         x++;
@@ -161,7 +157,7 @@ void hash_ring_print(hash_ring_t *ring) {
     
     printf("\n");
     printf("----------------------------------------\n");
-    
+
 }
 
 int hash_ring_add_items(hash_ring_t *ring, hash_ring_node_t *node) {
@@ -172,12 +168,19 @@ int hash_ring_add_items(hash_ring_t *ring, hash_ring_node_t *node) {
     uint64_t keyInt;
 
     // Resize the items array
-    void *resized = realloc(ring->items, (sizeof(hash_ring_item_t*) * ring->numNodes * ring->numReplicas));
+    void *resized = realloc(ring->items, (sizeof(hash_ring_item_t*) * (ring->numItems + node->numReplicas)));
     if(resized == NULL) {
         return HASH_RING_ERR;
     }
     ring->items = (hash_ring_item_t**)resized;
-    for(x = 0; x < ring->numReplicas; x++) {
+
+    uint8_t *data = (uint8_t*)malloc(sizeof(concat_buf) + node->nameLen);
+    if(data == NULL) {
+        return HASH_RING_ERR;
+    }
+    memcpy(data, node->name, node->nameLen);
+
+    for(x = 0; x < node->numReplicas; x++) {
         if(ring->mode == HASH_RING_MODE_LIBMEMCACHED_COMPAT) {
             concat_len = snprintf(concat_buf, sizeof(concat_buf), "-%d", x);
         }
@@ -185,22 +188,25 @@ int hash_ring_add_items(hash_ring_t *ring, hash_ring_node_t *node) {
             concat_len = snprintf(concat_buf, sizeof(concat_buf), "%d", x);
         }
 
-        uint8_t *data = (uint8_t*)malloc(concat_len + node->nameLen);
-        memcpy(data, node->name, node->nameLen);
         memcpy(data + node->nameLen, &concat_buf, concat_len);
 
         if(hash_ring_hash(ring, data, concat_len + node->nameLen, &keyInt) == -1) {
+            free(data);
             return HASH_RING_ERR;
         }
-        
+
         hash_ring_item_t *item = (hash_ring_item_t*)malloc(sizeof(hash_ring_item_t));
+        if (item == NULL) {
+            free(data);
+            return HASH_RING_ERR;
+        }
         item->node = node;
         item->number = keyInt;
-        
-        ring->items[(ring->numNodes - 1) * ring->numReplicas + x] = item;
+
+        ring->items[ring->numItems++] = item;
     }
 
-    ring->numItems += ring->numReplicas;
+    free(data);
     return HASH_RING_OK;
 }
 
@@ -220,7 +226,9 @@ static int item_sort(void *a, void *b) {
     }
 }
 
-int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen) {
+int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen, uint32_t numReplicas) {
+    // numReplicas must be greater than or equal to 1
+    if(numReplicas <= 0) return HASH_RING_ERR;
     if(ring == NULL) return HASH_RING_ERR;
     if(hash_ring_get_node(ring, name, nameLen) != NULL) return HASH_RING_ERR;
     if(name == NULL || nameLen <= 0) return HASH_RING_ERR;
@@ -236,6 +244,7 @@ int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen) {
     }
     memcpy(node->name, name, nameLen);
     node->nameLen = nameLen;
+    node->numReplicas = numReplicas;
     
     ll_t *cur = (ll_t*)malloc(sizeof(ll_t));
     if(cur == NULL) {
@@ -287,18 +296,20 @@ int hash_ring_remove_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen) {
                 }
                 
                 int x;
+                uint32_t itemsRemoved = 0;
                 // Remove all items for this node and mark them as NULL
                 for(x = 0; x < ring->numItems; x++) {
                     if(ring->items[x]->node == node) {
                         free(ring->items[x]);
                         ring->items[x] = NULL;
+                        itemsRemoved++;
                     }
                 }
                 
                 // By re-sorting, all the NULLs will be at the end of the array
                 // Then the numItems is reset and that memory is no longer used
                 quicksort((void**)ring->items, ring->numItems, item_sort);
-                ring->numItems -= ring->numReplicas;
+                ring->numItems -= itemsRemoved;
                 
                 free(node);
                 free(cur);
