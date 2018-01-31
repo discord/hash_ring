@@ -102,7 +102,7 @@ def gen_hash_ring_slow(nodes):
     return ring
 
 
-N = lambda name, c, num_replicas=512: (HashRingNode(name=name, num_replicas=num_replicas), c)
+N = lambda name, count, num_replicas=512: (HashRingNode(name=name, num_replicas=num_replicas), count)
 
 
 @pytest.mark.parametrize('ring_generator', [gen_hash_ring_fast, gen_hash_ring_slow])
