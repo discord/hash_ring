@@ -5,6 +5,7 @@ from hash_ring import HashRingNode, HashRing
 pytestmark = [pytest.mark.benchmark]
 
 
+@pytest.mark.benchmark(group='add_nodes')
 @pytest.mark.parametrize('num_nodes', [5, 10, 25, 50, 100])
 def test_ring_add_nodes_slow(benchmark, num_nodes):
     def ring_slow():
@@ -18,6 +19,7 @@ def test_ring_add_nodes_slow(benchmark, num_nodes):
     benchmark(ring_slow)
 
 
+@pytest.mark.benchmark(group='add_nodes')
 @pytest.mark.parametrize('num_nodes', [5, 10, 25, 50, 100])
 def test_ring_add_nodes_fast(benchmark, num_nodes):
     def ring_fast():
@@ -31,6 +33,7 @@ def test_ring_add_nodes_fast(benchmark, num_nodes):
     benchmark(ring_fast)
 
 
+@pytest.mark.benchmark(group='find_node')
 @pytest.mark.parametrize('num_nodes', [5, 10, 25, 50, 100])
 def test_ring_find_node(benchmark, num_nodes):
     r = HashRing()
@@ -46,6 +49,7 @@ def test_ring_find_node(benchmark, num_nodes):
     assert benchmark(ring_lookup) == r.find_node('hello')
 
 
+@pytest.mark.benchmark(group='find_nodes')
 @pytest.mark.parametrize('num_nodes', [5, 10, 25, 50, 100])
 def test_ring_find_nodes(benchmark, num_nodes):
     r = HashRing()
