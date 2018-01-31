@@ -37,6 +37,7 @@ hash_ring_t *hash_ring_create(HASH_FUNCTION hash_fn) {
     
     ring->nodes = NULL;
     ring->items = NULL;
+    ring->itemsSize = 0;
     ring->numNodes = 0;
     ring->numItems = 0;
     ring->hash_fn = hash_fn;
@@ -65,6 +66,7 @@ void hash_ring_free(hash_ring_t *ring) {
         free(ring->items[x]);
     }
     if(ring->items != NULL) free(ring->items);
+    ring->itemsSize = 0;
     
     free(ring);
 }
@@ -168,11 +170,10 @@ int hash_ring_add_items(hash_ring_t *ring, hash_ring_node_t *node) {
     uint64_t keyInt;
 
     // Resize the items array
-    void *resized = realloc(ring->items, (sizeof(hash_ring_item_t*) * (ring->numItems + node->numReplicas)));
-    if(resized == NULL) {
+    size_t targetItemsSize = sizeof(hash_ring_item_t*) * (ring->numItems + node->numReplicas);
+    if(hash_ring_ensure_items_size(ring, targetItemsSize) == HASH_RING_ERR) {
         return HASH_RING_ERR;
     }
-    ring->items = (hash_ring_item_t**)resized;
 
     uint8_t *data = (uint8_t*)malloc(sizeof(concat_buf) + node->nameLen);
     if(data == NULL) {
@@ -226,7 +227,7 @@ static int item_sort(void *a, void *b) {
     }
 }
 
-int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen, uint32_t numReplicas) {
+int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen, uint32_t numReplicas, int doSort) {
     // numReplicas must be greater than or equal to 1
     if(numReplicas <= 0) return HASH_RING_ERR;
     if(ring == NULL) return HASH_RING_ERR;
@@ -268,7 +269,9 @@ int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen, uint3
     }
 
     // Sort the items
-    quicksort((void**)ring->items, ring->numItems, item_sort);
+    if(doSort == 1) {
+        hash_ring_sort(ring);
+    }
 
     return HASH_RING_OK;
 }
@@ -308,7 +311,7 @@ int hash_ring_remove_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen) {
                 
                 // By re-sorting, all the NULLs will be at the end of the array
                 // Then the numItems is reset and that memory is no longer used
-                quicksort((void**)ring->items, ring->numItems, item_sort);
+                hash_ring_sort(ring);
                 ring->numItems -= itemsRemoved;
                 
                 free(node);
@@ -455,4 +458,28 @@ int hash_ring_set_mode(hash_ring_t *ring, HASH_MODE mode) {
         /* Invalid mode */
         return HASH_RING_ERR;
     }
+}
+
+int hash_ring_ensure_items_size(hash_ring_t *ring, size_t targetItemsSize) {
+    if(targetItemsSize <= ring->itemsSize) {
+        return HASH_RING_OK;
+    }
+
+    void *resized = realloc(ring->items, targetItemsSize);
+    if(resized == NULL) {
+        return HASH_RING_ERR;
+    }
+
+    ring->items = (hash_ring_item_t**)resized;
+    ring->itemsSize = targetItemsSize;
+
+    return HASH_RING_OK;
+}
+
+int hash_ring_sort(hash_ring_t *ring) {
+    if(ring->items != NULL) {
+        quicksort((void**)ring->items, ring->numItems, item_sort);
+    }
+
+    return HASH_RING_OK;
 }

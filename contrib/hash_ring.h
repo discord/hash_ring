@@ -89,6 +89,11 @@ typedef struct hash_ring_t {
      * This array is sorted ascending
      */
     hash_ring_item_t **items;
+
+    /**
+     * How big the items array has allocated
+     */
+    size_t itemsSize;
     
     /* The number of items in the ring */
     uint32_t numItems;
@@ -128,9 +133,10 @@ void hash_ring_free(hash_ring_t *ring);
  * of how many times it is added.
  *
  * @param[in] numReplicas The number of replicas this node shall contain.
+ * @param[in] doSort Whether we should sort the internal items array. If set to 0, hash_ring_sort must be called.
  * @returns HASH_RING_OK if the node was added, HASH_RING_ERR if an error occurred.
  */
-int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen, uint32_t numReplicas);
+int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen, uint32_t numReplicas, int doSort);
 
 
 /**
@@ -188,5 +194,26 @@ void hash_ring_print(hash_ring_t *ring);
  * @returns HASH_RING_OK if the mode was set.
  */
 int hash_ring_set_mode(hash_ring_t *ring, HASH_MODE mode);
+
+/**
+ * Resizes the internal items array. Use this if you know the total number of replicas you plan to add ahead
+ * of time, to avoid excessive re-allocations.
+ *
+ * @param ring The ring to resize the items array of.
+ * @param targetItemsSize How big you want the items array to be resized to.
+ *
+ * @returns HASH_RING_OK if the resize was successful.
+ */
+int hash_ring_ensure_items_size(hash_ring_t *ring, size_t targetItemsSize);
+
+
+/**
+ * Sorts the hash items array of the hash ring. You must call this after calling hash_ring_add_node with do_sort == 0.
+ *
+ * @param ring The ring to sort the internal items array of.
+ *
+ * @returns HASH_RING_OK if the sort was successful.
+ */
+int hash_ring_sort(hash_ring_t* ring);
 
 #endif
