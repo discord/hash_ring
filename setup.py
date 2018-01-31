@@ -29,5 +29,5 @@ setup(
     cmdclass=cmdclass,
     ext_modules=[ext],
     tests_require=['pytest'],
-    setup_requires=['pytest-runner']
+    setup_requires=['pytest-runner', 'pytest-benchmark']
 )

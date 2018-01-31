@@ -1,7 +1,8 @@
+import pytest
+
 import random
 
-from hash_ring import HashRing
-from hash_ring.hash_ring import HashRingNode
+from hash_ring import HashRing, HashRingNode
 
 
 def test_hash_ring_basic_flow():
@@ -64,22 +65,29 @@ def test_hash_ring_stress_test():
     assert total_items == 0
 
 
-from hash_ring import HashRing, HashRingNode
-
-
-def ring_fast():
+def ring_fast(num_nodes):
     r = HashRing()
     nodes = []
-    for i in xrange(100):
+    for i in xrange(num_nodes):
         nodes.append(HashRingNode('test-%i' % i, num_replicas=512))
 
     r.add_nodes(nodes)
 
 
-def ring_slow():
+def ring_slow(num_nodes):
     r = HashRing()
     nodes = []
-    for i in xrange(100):
+    for i in xrange(num_nodes):
         r.add_node('test-%i' % i, num_replicas=512)
 
     r.add_nodes(nodes)
+
+
+@pytest.mark.parametrize('num_nodes', [5, 10, 25, 50, 100])
+def test_ring_add_nodes_slow(benchmark, num_nodes):
+    benchmark(ring_slow, num_nodes)
+
+
+@pytest.mark.parametrize('num_nodes', [5, 10, 25, 50, 100])
+def test_ring_add_nodes_fast(benchmark, num_nodes):
+    benchmark(ring_fast, num_nodes)
