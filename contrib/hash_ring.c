@@ -270,7 +270,7 @@ int hash_ring_add_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen, uint3
 
     // Sort the items
     if(doSort == 1) {
-        quicksort((void**)ring->items, ring->numItems, item_sort);
+        hash_ring_sort(ring);
     }
 
     return HASH_RING_OK;
@@ -311,7 +311,7 @@ int hash_ring_remove_node(hash_ring_t *ring, uint8_t *name, uint32_t nameLen) {
                 
                 // By re-sorting, all the NULLs will be at the end of the array
                 // Then the numItems is reset and that memory is no longer used
-                quicksort((void**)ring->items, ring->numItems, item_sort);
+                hash_ring_sort(ring);
                 ring->numItems -= itemsRemoved;
                 
                 free(node);
