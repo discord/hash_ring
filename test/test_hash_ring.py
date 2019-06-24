@@ -1,9 +1,11 @@
+from __future__ import absolute_import
 import pytest
 
 import random
 from collections import Counter
 
 from hash_ring import HashRing, HashRingNode
+from six.moves import range
 
 
 def test_hash_ring_basic_flow():
@@ -42,11 +44,11 @@ def test_hash_ring_add():
 
 
 def test_hash_ring_stress_test():
-    replica_sizes = [2 ** i for i in xrange(10)]
+    replica_sizes = [2 ** i for i in range(10)]
 
     ring = HashRing()
     config = []
-    for i in xrange(20):
+    for i in range(20):
         name = 'test-%i' % i
         num_replicas = replica_sizes[hash(name) % len(replica_sizes)]
         config.append((name, num_replicas))
@@ -67,12 +69,12 @@ def test_hash_ring_stress_test():
 
 
 def test_hash_ring_stress_fast():
-    replica_sizes = [2 ** i for i in xrange(10)]
+    replica_sizes = [2 ** i for i in range(10)]
 
     ring = HashRing()
     nodes = []
     total_items = 0
-    for i in xrange(20):
+    for i in range(20):
         name = 'test-%i' % i
         num_replicas = replica_sizes[hash(name) % len(replica_sizes)]
         nodes.append(HashRingNode(name=name, num_replicas=num_replicas))
@@ -118,7 +120,7 @@ def test_hash_ring_distributions(ring_generator, nodes):
     ring = ring_generator(nodes)
 
     c = Counter()
-    for i in xrange(100000):
+    for i in range(100000):
         node_name = ring.find_node(i)
         c[node_name] += 1
 
