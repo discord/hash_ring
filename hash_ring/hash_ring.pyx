@@ -80,7 +80,11 @@ cdef class HashRing:
         hash_ring_print(self._ring)
 
     def find_node(self, key):
-        if not isinstance(key, bytes):
+        # `bytes(n)` in python3 creates a byte string of
+        # size n when passed an int.
+        if isinstance(key, int):
+            key = b'%i' % key
+        elif not isinstance(key, bytes):
             key = bytes(key)
 
         node = hash_ring_find_node(self._ring, key, len(key))
@@ -89,7 +93,11 @@ cdef class HashRing:
             return node.name[:node.name_len]
 
     def find_nodes(self, key, num=1):
-        if not isinstance(key, bytes):
+        # `bytes(n)` in python3 creates a byte string of
+        # size n when passed an int.
+        if isinstance(key, int):
+            key = b'%i' % key
+        elif not isinstance(key, bytes):
             key = bytes(key)
 
         cdef hash_ring_node_t ** nodes = <hash_ring_node_t **> malloc(sizeof(hash_ring_node_t *) * num)

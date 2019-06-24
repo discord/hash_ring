@@ -1284,6 +1284,7 @@ int __pyx_module_is_main_hash_ring__hash_ring = 0;
 /* Implementation of 'hash_ring.hash_ring' */
 static PyObject *__pyx_builtin_MemoryError;
 static PyObject *__pyx_builtin_TypeError;
+static const char __pyx_k_i[] = "%i";
 static const char __pyx_k_doc[] = "__doc__";
 static const char __pyx_k_key[] = "key";
 static const char __pyx_k_num[] = "num";
@@ -1333,6 +1334,7 @@ static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_s_hash_fn;
 static PyObject *__pyx_n_s_hash_ring_hash_ring;
 static PyObject *__pyx_kp_s_hash_ring_hash_ring_pyx;
+static PyObject *__pyx_kp_b_i;
 static PyObject *__pyx_n_s_init;
 static PyObject *__pyx_n_s_key;
 static PyObject *__pyx_n_s_main;
@@ -2230,8 +2232,8 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_10print_ring(struct __
  *         hash_ring_print(self._ring)
  * 
  *     def find_node(self, key):             # <<<<<<<<<<<<<<
- *         if not isinstance(key, bytes):
- *             key = bytes(key)
+ *         # `bytes(n)` in python3 creates a byte string of
+ *         # size n when passed an int.
  */
 
 /* Python wrapper */
@@ -2259,60 +2261,94 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_12find_node(struct __p
   __Pyx_RefNannySetupContext("find_node", 0);
   __Pyx_INCREF(__pyx_v_key);
 
-  /* "hash_ring/hash_ring.pyx":83
- * 
- *     def find_node(self, key):
- *         if not isinstance(key, bytes):             # <<<<<<<<<<<<<<
- *             key = bytes(key)
- * 
+  /* "hash_ring/hash_ring.pyx":85
+ *         # `bytes(n)` in python3 creates a byte string of
+ *         # size n when passed an int.
+ *         if isinstance(key, int):             # <<<<<<<<<<<<<<
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):
  */
-  __pyx_t_1 = PyBytes_Check(__pyx_v_key); 
-  __pyx_t_2 = ((!(__pyx_t_1 != 0)) != 0);
+  __pyx_t_1 = PyInt_Check(__pyx_v_key); 
+  __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "hash_ring/hash_ring.pyx":84
- *     def find_node(self, key):
- *         if not isinstance(key, bytes):
- *             key = bytes(key)             # <<<<<<<<<<<<<<
- * 
- *         node = hash_ring_find_node(self._ring, key, len(key))
+    /* "hash_ring/hash_ring.pyx":86
+ *         # size n when passed an int.
+ *         if isinstance(key, int):
+ *             key = b'%i' % key             # <<<<<<<<<<<<<<
+ *         elif not isinstance(key, bytes):
+ *             key = bytes(key)
  */
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Remainder(__pyx_kp_b_i, __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_key, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "hash_ring/hash_ring.pyx":83
+    /* "hash_ring/hash_ring.pyx":85
+ *         # `bytes(n)` in python3 creates a byte string of
+ *         # size n when passed an int.
+ *         if isinstance(key, int):             # <<<<<<<<<<<<<<
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):
+ */
+    goto __pyx_L3;
+  }
+
+  /* "hash_ring/hash_ring.pyx":87
+ *         if isinstance(key, int):
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):             # <<<<<<<<<<<<<<
+ *             key = bytes(key)
  * 
- *     def find_node(self, key):
- *         if not isinstance(key, bytes):             # <<<<<<<<<<<<<<
+ */
+  __pyx_t_2 = PyBytes_Check(__pyx_v_key); 
+  __pyx_t_1 = ((!(__pyx_t_2 != 0)) != 0);
+  if (__pyx_t_1) {
+
+    /* "hash_ring/hash_ring.pyx":88
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):
+ *             key = bytes(key)             # <<<<<<<<<<<<<<
+ * 
+ *         node = hash_ring_find_node(self._ring, key, len(key))
+ */
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF_SET(__pyx_v_key, __pyx_t_3);
+    __pyx_t_3 = 0;
+
+    /* "hash_ring/hash_ring.pyx":87
+ *         if isinstance(key, int):
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):             # <<<<<<<<<<<<<<
  *             key = bytes(key)
  * 
  */
   }
+  __pyx_L3:;
 
-  /* "hash_ring/hash_ring.pyx":86
+  /* "hash_ring/hash_ring.pyx":90
  *             key = bytes(key)
  * 
  *         node = hash_ring_find_node(self._ring, key, len(key))             # <<<<<<<<<<<<<<
  * 
  *         if node:
  */
-  __pyx_t_4 = __Pyx_PyObject_AsWritableUString(__pyx_v_key); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L1_error)
-  __pyx_t_5 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_AsWritableUString(__pyx_v_key); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_5 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 90, __pyx_L1_error)
   __pyx_v_node = hash_ring_find_node(__pyx_v_self->_ring, __pyx_t_4, __pyx_t_5);
 
-  /* "hash_ring/hash_ring.pyx":88
+  /* "hash_ring/hash_ring.pyx":92
  *         node = hash_ring_find_node(self._ring, key, len(key))
  * 
  *         if node:             # <<<<<<<<<<<<<<
  *             return node.name[:node.name_len]
  * 
  */
-  __pyx_t_2 = (__pyx_v_node != 0);
-  if (__pyx_t_2) {
+  __pyx_t_1 = (__pyx_v_node != 0);
+  if (__pyx_t_1) {
 
-    /* "hash_ring/hash_ring.pyx":89
+    /* "hash_ring/hash_ring.pyx":93
  * 
  *         if node:
  *             return node.name[:node.name_len]             # <<<<<<<<<<<<<<
@@ -2320,13 +2356,13 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_12find_node(struct __p
  *     def find_nodes(self, key, num=1):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "hash_ring/hash_ring.pyx":88
+    /* "hash_ring/hash_ring.pyx":92
  *         node = hash_ring_find_node(self._ring, key, len(key))
  * 
  *         if node:             # <<<<<<<<<<<<<<
@@ -2339,8 +2375,8 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_12find_node(struct __p
  *         hash_ring_print(self._ring)
  * 
  *     def find_node(self, key):             # <<<<<<<<<<<<<<
- *         if not isinstance(key, bytes):
- *             key = bytes(key)
+ *         # `bytes(n)` in python3 creates a byte string of
+ *         # size n when passed an int.
  */
 
   /* function exit code */
@@ -2357,12 +2393,12 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_12find_node(struct __p
   return __pyx_r;
 }
 
-/* "hash_ring/hash_ring.pyx":91
+/* "hash_ring/hash_ring.pyx":95
  *             return node.name[:node.name_len]
  * 
  *     def find_nodes(self, key, num=1):             # <<<<<<<<<<<<<<
- *         if not isinstance(key, bytes):
- *             key = bytes(key)
+ *         # `bytes(n)` in python3 creates a byte string of
+ *         # size n when passed an int.
  */
 
 /* Python wrapper */
@@ -2401,7 +2437,7 @@ static PyObject *__pyx_pw_9hash_ring_9hash_ring_8HashRing_15find_nodes(PyObject 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "find_nodes") < 0)) __PYX_ERR(0, 91, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "find_nodes") < 0)) __PYX_ERR(0, 95, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2417,7 +2453,7 @@ static PyObject *__pyx_pw_9hash_ring_9hash_ring_8HashRing_15find_nodes(PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("find_nodes", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 91, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("find_nodes", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 95, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hash_ring.hash_ring.HashRing.find_nodes", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2460,74 +2496,108 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_14find_nodes(struct __
   __Pyx_RefNannySetupContext("find_nodes", 0);
   __Pyx_INCREF(__pyx_v_key);
 
-  /* "hash_ring/hash_ring.pyx":92
- * 
- *     def find_nodes(self, key, num=1):
- *         if not isinstance(key, bytes):             # <<<<<<<<<<<<<<
- *             key = bytes(key)
- * 
+  /* "hash_ring/hash_ring.pyx":98
+ *         # `bytes(n)` in python3 creates a byte string of
+ *         # size n when passed an int.
+ *         if isinstance(key, int):             # <<<<<<<<<<<<<<
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):
  */
-  __pyx_t_1 = PyBytes_Check(__pyx_v_key); 
-  __pyx_t_2 = ((!(__pyx_t_1 != 0)) != 0);
+  __pyx_t_1 = PyInt_Check(__pyx_v_key); 
+  __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "hash_ring/hash_ring.pyx":93
- *     def find_nodes(self, key, num=1):
- *         if not isinstance(key, bytes):
- *             key = bytes(key)             # <<<<<<<<<<<<<<
- * 
- *         cdef hash_ring_node_t ** nodes = <hash_ring_node_t **> malloc(sizeof(hash_ring_node_t *) * num)
+    /* "hash_ring/hash_ring.pyx":99
+ *         # size n when passed an int.
+ *         if isinstance(key, int):
+ *             key = b'%i' % key             # <<<<<<<<<<<<<<
+ *         elif not isinstance(key, bytes):
+ *             key = bytes(key)
  */
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Remainder(__pyx_kp_b_i, __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 99, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_key, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "hash_ring/hash_ring.pyx":92
+    /* "hash_ring/hash_ring.pyx":98
+ *         # `bytes(n)` in python3 creates a byte string of
+ *         # size n when passed an int.
+ *         if isinstance(key, int):             # <<<<<<<<<<<<<<
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):
+ */
+    goto __pyx_L3;
+  }
+
+  /* "hash_ring/hash_ring.pyx":100
+ *         if isinstance(key, int):
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):             # <<<<<<<<<<<<<<
+ *             key = bytes(key)
  * 
- *     def find_nodes(self, key, num=1):
- *         if not isinstance(key, bytes):             # <<<<<<<<<<<<<<
+ */
+  __pyx_t_2 = PyBytes_Check(__pyx_v_key); 
+  __pyx_t_1 = ((!(__pyx_t_2 != 0)) != 0);
+  if (__pyx_t_1) {
+
+    /* "hash_ring/hash_ring.pyx":101
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):
+ *             key = bytes(key)             # <<<<<<<<<<<<<<
+ * 
+ *         cdef hash_ring_node_t ** nodes = <hash_ring_node_t **> malloc(sizeof(hash_ring_node_t *) * num)
+ */
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF_SET(__pyx_v_key, __pyx_t_3);
+    __pyx_t_3 = 0;
+
+    /* "hash_ring/hash_ring.pyx":100
+ *         if isinstance(key, int):
+ *             key = b'%i' % key
+ *         elif not isinstance(key, bytes):             # <<<<<<<<<<<<<<
  *             key = bytes(key)
  * 
  */
   }
+  __pyx_L3:;
 
-  /* "hash_ring/hash_ring.pyx":95
+  /* "hash_ring/hash_ring.pyx":103
  *             key = bytes(key)
  * 
  *         cdef hash_ring_node_t ** nodes = <hash_ring_node_t **> malloc(sizeof(hash_ring_node_t *) * num)             # <<<<<<<<<<<<<<
  *         if not nodes:
  *             raise MemoryError()
  */
-  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(hash_ring_node_t *))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(hash_ring_node_t *))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyNumber_Multiply(__pyx_t_3, __pyx_v_num); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Multiply(__pyx_t_3, __pyx_v_num); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_5 = __Pyx_PyInt_As_size_t(__pyx_t_4); if (unlikely((__pyx_t_5 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_As_size_t(__pyx_t_4); if (unlikely((__pyx_t_5 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_nodes = ((hash_ring_node_t **)malloc(__pyx_t_5));
 
-  /* "hash_ring/hash_ring.pyx":96
+  /* "hash_ring/hash_ring.pyx":104
  * 
  *         cdef hash_ring_node_t ** nodes = <hash_ring_node_t **> malloc(sizeof(hash_ring_node_t *) * num)
  *         if not nodes:             # <<<<<<<<<<<<<<
  *             raise MemoryError()
  * 
  */
-  __pyx_t_2 = ((!(__pyx_v_nodes != 0)) != 0);
-  if (unlikely(__pyx_t_2)) {
+  __pyx_t_1 = ((!(__pyx_v_nodes != 0)) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "hash_ring/hash_ring.pyx":97
+    /* "hash_ring/hash_ring.pyx":105
  *         cdef hash_ring_node_t ** nodes = <hash_ring_node_t **> malloc(sizeof(hash_ring_node_t *) * num)
  *         if not nodes:
  *             raise MemoryError()             # <<<<<<<<<<<<<<
  * 
  *         try:
  */
-    PyErr_NoMemory(); __PYX_ERR(0, 97, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(0, 105, __pyx_L1_error)
 
-    /* "hash_ring/hash_ring.pyx":96
+    /* "hash_ring/hash_ring.pyx":104
  * 
  *         cdef hash_ring_node_t ** nodes = <hash_ring_node_t **> malloc(sizeof(hash_ring_node_t *) * num)
  *         if not nodes:             # <<<<<<<<<<<<<<
@@ -2536,7 +2606,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_14find_nodes(struct __
  */
   }
 
-  /* "hash_ring/hash_ring.pyx":99
+  /* "hash_ring/hash_ring.pyx":107
  *             raise MemoryError()
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -2545,19 +2615,19 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_14find_nodes(struct __
  */
   /*try:*/ {
 
-    /* "hash_ring/hash_ring.pyx":100
+    /* "hash_ring/hash_ring.pyx":108
  * 
  *         try:
  *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)             # <<<<<<<<<<<<<<
  *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []
  * 
  */
-    __pyx_t_6 = __Pyx_PyObject_AsWritableUString(__pyx_v_key); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 100, __pyx_L6_error)
-    __pyx_t_7 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_7 == ((Py_ssize_t)-1))) __PYX_ERR(0, 100, __pyx_L6_error)
-    __pyx_t_8 = __Pyx_PyInt_As_unsigned_int(__pyx_v_num); if (unlikely((__pyx_t_8 == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 100, __pyx_L6_error)
+    __pyx_t_6 = __Pyx_PyObject_AsWritableUString(__pyx_v_key); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 108, __pyx_L6_error)
+    __pyx_t_7 = PyObject_Length(__pyx_v_key); if (unlikely(__pyx_t_7 == ((Py_ssize_t)-1))) __PYX_ERR(0, 108, __pyx_L6_error)
+    __pyx_t_8 = __Pyx_PyInt_As_unsigned_int(__pyx_v_num); if (unlikely((__pyx_t_8 == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 108, __pyx_L6_error)
     __pyx_v_n = hash_ring_find_nodes(__pyx_v_self->_ring, __pyx_t_6, __pyx_t_7, __pyx_v_nodes, __pyx_t_8);
 
-    /* "hash_ring/hash_ring.pyx":101
+    /* "hash_ring/hash_ring.pyx":109
  *         try:
  *             n = hash_ring_find_nodes(self._ring, key, len(key), nodes, num)
  *             return [node.name[:node.name_len] for node in nodes[:n]] if n > -1 else []             # <<<<<<<<<<<<<<
@@ -2566,21 +2636,21 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_14find_nodes(struct __
  */
     __Pyx_XDECREF(__pyx_r);
     if (((__pyx_v_n > -1L) != 0)) {
-      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L6_error)
+      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_10 = (__pyx_v_nodes + __pyx_v_n);
       for (__pyx_t_11 = __pyx_v_nodes; __pyx_t_11 < __pyx_t_10; __pyx_t_11++) {
         __pyx_t_9 = __pyx_t_11;
         __pyx_v_node = (__pyx_t_9[0]);
-        __pyx_t_12 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 101, __pyx_L6_error)
+        __pyx_t_12 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 109, __pyx_L6_error)
         __Pyx_GOTREF(__pyx_t_12);
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_12))) __PYX_ERR(0, 101, __pyx_L6_error)
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_12))) __PYX_ERR(0, 109, __pyx_L6_error)
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       }
       __pyx_t_4 = __pyx_t_3;
       __pyx_t_3 = 0;
     } else {
-      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L6_error)
+      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = __pyx_t_3;
       __pyx_t_3 = 0;
@@ -2590,7 +2660,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_14find_nodes(struct __
     goto __pyx_L5_return;
   }
 
-  /* "hash_ring/hash_ring.pyx":104
+  /* "hash_ring/hash_ring.pyx":112
  * 
  *         finally:
  *             free(nodes)             # <<<<<<<<<<<<<<
@@ -2642,12 +2712,12 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_14find_nodes(struct __
     }
   }
 
-  /* "hash_ring/hash_ring.pyx":91
+  /* "hash_ring/hash_ring.pyx":95
  *             return node.name[:node.name_len]
  * 
  *     def find_nodes(self, key, num=1):             # <<<<<<<<<<<<<<
- *         if not isinstance(key, bytes):
- *             key = bytes(key)
+ *         # `bytes(n)` in python3 creates a byte string of
+ *         # size n when passed an int.
  */
 
   /* function exit code */
@@ -2664,7 +2734,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_14find_nodes(struct __
   return __pyx_r;
 }
 
-/* "hash_ring/hash_ring.pyx":106
+/* "hash_ring/hash_ring.pyx":114
  *             free(nodes)
  * 
  *     def get_num_items(self):             # <<<<<<<<<<<<<<
@@ -2691,7 +2761,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_16get_num_items(struct
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("get_num_items", 0);
 
-  /* "hash_ring/hash_ring.pyx":107
+  /* "hash_ring/hash_ring.pyx":115
  * 
  *     def get_num_items(self):
  *         return self._ring.num_items             # <<<<<<<<<<<<<<
@@ -2699,13 +2769,13 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_16get_num_items(struct
  *     def get_node(self, node_name):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_v_self->_ring->numItems); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_v_self->_ring->numItems); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "hash_ring/hash_ring.pyx":106
+  /* "hash_ring/hash_ring.pyx":114
  *             free(nodes)
  * 
  *     def get_num_items(self):             # <<<<<<<<<<<<<<
@@ -2724,7 +2794,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_16get_num_items(struct
   return __pyx_r;
 }
 
-/* "hash_ring/hash_ring.pyx":109
+/* "hash_ring/hash_ring.pyx":117
  *         return self._ring.num_items
  * 
  *     def get_node(self, node_name):             # <<<<<<<<<<<<<<
@@ -2757,18 +2827,18 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_18get_node(struct __py
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("get_node", 0);
 
-  /* "hash_ring/hash_ring.pyx":110
+  /* "hash_ring/hash_ring.pyx":118
  * 
  *     def get_node(self, node_name):
  *         node = hash_ring_get_node(self._ring, node_name, len(node_name))             # <<<<<<<<<<<<<<
  *         if not node:
  *             return None
  */
-  __pyx_t_1 = __Pyx_PyObject_AsWritableUString(__pyx_v_node_name); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
-  __pyx_t_2 = PyObject_Length(__pyx_v_node_name); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 110, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_AsWritableUString(__pyx_v_node_name); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_v_node_name); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 118, __pyx_L1_error)
   __pyx_v_node = hash_ring_get_node(__pyx_v_self->_ring, __pyx_t_1, __pyx_t_2);
 
-  /* "hash_ring/hash_ring.pyx":111
+  /* "hash_ring/hash_ring.pyx":119
  *     def get_node(self, node_name):
  *         node = hash_ring_get_node(self._ring, node_name, len(node_name))
  *         if not node:             # <<<<<<<<<<<<<<
@@ -2778,7 +2848,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_18get_node(struct __py
   __pyx_t_3 = ((!(__pyx_v_node != 0)) != 0);
   if (__pyx_t_3) {
 
-    /* "hash_ring/hash_ring.pyx":112
+    /* "hash_ring/hash_ring.pyx":120
  *         node = hash_ring_get_node(self._ring, node_name, len(node_name))
  *         if not node:
  *             return None             # <<<<<<<<<<<<<<
@@ -2789,7 +2859,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_18get_node(struct __py
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "hash_ring/hash_ring.pyx":111
+    /* "hash_ring/hash_ring.pyx":119
  *     def get_node(self, node_name):
  *         node = hash_ring_get_node(self._ring, node_name, len(node_name))
  *         if not node:             # <<<<<<<<<<<<<<
@@ -2798,7 +2868,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_18get_node(struct __py
  */
   }
 
-  /* "hash_ring/hash_ring.pyx":114
+  /* "hash_ring/hash_ring.pyx":122
  *             return None
  * 
  *         return HashRingNode(name=node.name[:node.name_len], num_replicas=node.num_replicas)             # <<<<<<<<<<<<<<
@@ -2806,19 +2876,19 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_18get_node(struct __py
  * class HashRingNode:
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_HashRingNode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_HashRingNode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_node->name) + 0, __pyx_v_node->nameLen - 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_name, __pyx_t_6) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_name, __pyx_t_6) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyInt_From_unsigned_int(__pyx_v_node->numReplicas); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_unsigned_int(__pyx_v_node->numReplicas); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_num_replicas, __pyx_t_6) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_num_replicas, __pyx_t_6) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -2826,7 +2896,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_18get_node(struct __py
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "hash_ring/hash_ring.pyx":109
+  /* "hash_ring/hash_ring.pyx":117
  *         return self._ring.num_items
  * 
  *     def get_node(self, node_name):             # <<<<<<<<<<<<<<
@@ -2954,7 +3024,7 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_8HashRing_22__setstate_cython__(
   return __pyx_r;
 }
 
-/* "hash_ring/hash_ring.pyx":117
+/* "hash_ring/hash_ring.pyx":125
  * 
  * class HashRingNode:
  *     def __init__(self, name, num_replicas):             # <<<<<<<<<<<<<<
@@ -2997,17 +3067,17 @@ static PyObject *__pyx_pw_9hash_ring_9hash_ring_12HashRingNode_1__init__(PyObjec
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_name)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 1); __PYX_ERR(0, 117, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 1); __PYX_ERR(0, 125, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_num_replicas)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 2); __PYX_ERR(0, 117, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 2); __PYX_ERR(0, 125, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 117, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 125, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -3022,7 +3092,7 @@ static PyObject *__pyx_pw_9hash_ring_9hash_ring_12HashRingNode_1__init__(PyObjec
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 117, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 125, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hash_ring.hash_ring.HashRingNode.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3040,22 +3110,22 @@ static PyObject *__pyx_pf_9hash_ring_9hash_ring_12HashRingNode___init__(CYTHON_U
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "hash_ring/hash_ring.pyx":118
+  /* "hash_ring/hash_ring.pyx":126
  * class HashRingNode:
  *     def __init__(self, name, num_replicas):
  *         self.name = name             # <<<<<<<<<<<<<<
  *         self.num_replicas = num_replicas
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_name, __pyx_v_name) < 0) __PYX_ERR(0, 118, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_name, __pyx_v_name) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
 
-  /* "hash_ring/hash_ring.pyx":119
+  /* "hash_ring/hash_ring.pyx":127
  *     def __init__(self, name, num_replicas):
  *         self.name = name
  *         self.num_replicas = num_replicas             # <<<<<<<<<<<<<<
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_num_replicas, __pyx_v_num_replicas) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_num_replicas, __pyx_v_num_replicas) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
 
-  /* "hash_ring/hash_ring.pyx":117
+  /* "hash_ring/hash_ring.pyx":125
  * 
  * class HashRingNode:
  *     def __init__(self, name, num_replicas):             # <<<<<<<<<<<<<<
@@ -3243,6 +3313,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_hash_fn, __pyx_k_hash_fn, sizeof(__pyx_k_hash_fn), 0, 0, 1, 1},
   {&__pyx_n_s_hash_ring_hash_ring, __pyx_k_hash_ring_hash_ring, sizeof(__pyx_k_hash_ring_hash_ring), 0, 0, 1, 1},
   {&__pyx_kp_s_hash_ring_hash_ring_pyx, __pyx_k_hash_ring_hash_ring_pyx, sizeof(__pyx_k_hash_ring_hash_ring_pyx), 0, 0, 1, 0},
+  {&__pyx_kp_b_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 0, 0},
   {&__pyx_n_s_init, __pyx_k_init, sizeof(__pyx_k_init), 0, 0, 1, 1},
   {&__pyx_n_s_key, __pyx_k_key, sizeof(__pyx_k_key), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
@@ -3265,7 +3336,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(0, 105, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -3295,17 +3366,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "hash_ring/hash_ring.pyx":117
+  /* "hash_ring/hash_ring.pyx":125
  * 
  * class HashRingNode:
  *     def __init__(self, name, num_replicas):             # <<<<<<<<<<<<<<
  *         self.name = name
  *         self.num_replicas = num_replicas
  */
-  __pyx_tuple__4 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_name, __pyx_n_s_num_replicas); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_name, __pyx_n_s_num_replicas); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_hash_ring_hash_ring_pyx, __pyx_n_s_init, 117, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_hash_ring_hash_ring_pyx, __pyx_n_s_init, 125, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -3635,38 +3706,38 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hash_ring/hash_ring.pyx":116
+  /* "hash_ring/hash_ring.pyx":124
  *         return HashRingNode(name=node.name[:node.name_len], num_replicas=node.num_replicas)
  * 
  * class HashRingNode:             # <<<<<<<<<<<<<<
  *     def __init__(self, name, num_replicas):
  *         self.name = name
  */
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_HashRingNode, __pyx_n_s_HashRingNode, (PyObject *) NULL, __pyx_n_s_hash_ring_hash_ring, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_HashRingNode, __pyx_n_s_HashRingNode, (PyObject *) NULL, __pyx_n_s_hash_ring_hash_ring, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "hash_ring/hash_ring.pyx":117
+  /* "hash_ring/hash_ring.pyx":125
  * 
  * class HashRingNode:
  *     def __init__(self, name, num_replicas):             # <<<<<<<<<<<<<<
  *         self.name = name
  *         self.num_replicas = num_replicas
  */
-  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_9hash_ring_9hash_ring_12HashRingNode_1__init__, 0, __pyx_n_s_HashRingNode___init, NULL, __pyx_n_s_hash_ring_hash_ring, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_9hash_ring_9hash_ring_12HashRingNode_1__init__, 0, __pyx_n_s_HashRingNode___init, NULL, __pyx_n_s_hash_ring_hash_ring, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 117, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hash_ring/hash_ring.pyx":116
+  /* "hash_ring/hash_ring.pyx":124
  *         return HashRingNode(name=node.name[:node.name_len], num_replicas=node.num_replicas)
  * 
  * class HashRingNode:             # <<<<<<<<<<<<<<
  *     def __init__(self, name, num_replicas):
  *         self.name = name
  */
-  __pyx_t_2 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_HashRingNode, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_HashRingNode, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_HashRingNode, __pyx_t_2) < 0) __PYX_ERR(0, 116, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_HashRingNode, __pyx_t_2) < 0) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
