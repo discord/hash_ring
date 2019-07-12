@@ -9,4 +9,7 @@ matrix:
   allow_failures:
     - python: "nightly"
 
+install:
+  - pip install pytest pytest-runner pytest-benchmark
+
 script: python setup.py test
