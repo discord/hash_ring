@@ -28,7 +28,7 @@ setup(
     zip_safe=False,
     cmdclass=cmdclass,
     ext_modules=[ext],
-    install_requires=["six==1.12.0"],
+    install_requires=["six~=1.12"],
     #tests_require=['pytest'],
     #setup_requires=['pytest-runner', 'pytest-benchmark']
 )
