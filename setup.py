@@ -23,12 +23,12 @@ ext = Extension('hash_ring.hash_ring', src, include_dirs=['contrib'])
 
 setup(
     name='hash_ring',
-    version='0.0.3',
+    version='0.0.4',
     packages=find_packages(),
     zip_safe=False,
     cmdclass=cmdclass,
     ext_modules=[ext],
-    install_requires=["six==1.12.0"],
+    install_requires=["six~=1.15"],
     #tests_require=['pytest'],
     #setup_requires=['pytest-runner', 'pytest-benchmark']
 )
