@@ -1,17 +1,17 @@
 /**
  * Copyright 2011 LiveProfile
- * 
- * 
+ *
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and 
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 
@@ -22,7 +22,7 @@
 void bubble_sort_array(void **array, int numItems, compare_func fn) {
     // an array of less than or equal to 1 is already sorted
     if(numItems <= 1) return;
-    
+
     void *temp;
     int x, result;
     while(1) {
@@ -45,25 +45,26 @@ void bubble_sort_array(void **array, int numItems, compare_func fn) {
     }
 }
 
+#define STACK_MAX 1024
+
 void quicksort(void **array, int numItems, compare_func fn) {
     if(numItems == 1) return;
-    int STACK_MAX = 1024;
-    
+
     int starts[STACK_MAX], ends[STACK_MAX];
-    
+
     int i = 0;
-    
+
     starts[i] = 0;
     ends[i] = numItems - 1;
 
-    while(i >= 0) {                
+    while(i >= 0) {
        int l = starts[i] + 1, r = ends[i];
-       
+
        if((l - 1) >= r) {
            i--;
            continue;
        }
-       
+
        int pivot = starts[i];
 
        void *tmp;
@@ -88,7 +89,7 @@ void quicksort(void **array, int numItems, compare_func fn) {
            array[pivot] = tmp;
        }
        l--;
-       
+
        if(r == ends[i]) {
            ends[i] = l;
        }
