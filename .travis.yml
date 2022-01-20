@@ -1,9 +1,11 @@
 dist: xenial
 language: python
 python:
-    - "2.7"
-    - "3.7"
-    - "nightly"
+  - "2.7"
+  - "3.7"
+  - "3.9"
+  - "3.10"
+  - "nightly"
 
 matrix:
   allow_failures:
